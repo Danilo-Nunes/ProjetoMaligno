@@ -28,8 +28,9 @@ public class Program
             for(int j = 0; j < colunas; j++)
                 labirinto[i][j] = file.read();
 
-        Pilha<Coordenadas> caminho;
+        Pilha<Coordenadas> caminho = new Pilha<Coordenadas>(linhas*colunas);
 
         Fila<Coordenadas> fila = new Fila<Coordenadas>(3);
+        Pilha<Fila<Cordenadas>> possibilidades = new Pilha<Fila<Cordenadas>>(linhas*colunas);
     }
 }
