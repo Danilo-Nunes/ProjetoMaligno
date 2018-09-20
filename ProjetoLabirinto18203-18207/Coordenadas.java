@@ -50,7 +50,8 @@ public class Coordenadas
     {
         int ret = 1;
 
-        ret = ret*2 + new Integer(this.x).hashCode() + new Integer(this.y).hashCode();
+        ret = ret*2 + new Integer(this.x).hashCode();
+        ret = ret*2 + new Integer(this.y).hashCode();
 
         return ret;
     }
