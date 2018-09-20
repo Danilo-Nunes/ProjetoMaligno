@@ -22,7 +22,11 @@ public class Program
         colunas = file.readLine();
 
 
-        char[][] labirinto;
+        char labirinto[][] = new char[linhas][colunas];
+
+        for(int i = 0; i < linhas; i++)
+            for(int j = 0; j < colunas; j++)
+                labirinto[i][j] = file.read();
 
         Pilha<Coordenadas> caminho;
 
