@@ -3,10 +3,10 @@ import Fila.*;
 import Coordenadas.*;
 import java.io.*;
 
-public class Program
+public class Program 
 {
     //ver se é número
-    static void main(String[] args)
+    static void main(String[] args) throws Exception
     {
         BufferedReader teclado = new BufferedReader(new InputStreamReader(System.in));
         // corrigir convenções do java para simbolos
@@ -138,7 +138,7 @@ public class Program
 
         }
 
-        private void Movimentar(Coordenadas atual)
+        private void Movimentar(Coordenadas atual) // throws Exception ???
         {
             Fila<Coordenadas> fila = new Fila<Coordenadas>(3);
 
@@ -195,11 +195,16 @@ public class Program
                 }            
             else
                 {
-                   atual = caminho.getUmItem();
-                   caminho.jogueForaUmItem();
-                   labirinto[atual.getX][atual.getY] = ' ';
-                   fila = possibilidades.getUmItem();
-                   possibilidades.jogueForaUmItem();
+                    if(!possibilidades.isVazia())
+                    {
+                    atual = caminho.getUmItem();
+                    caminho.jogueForaUmItem();
+                    labirinto[atual.getX][atual.getY] = ' ';
+                    fila = possibilidades.getUmItem();
+                    possibilidades.jogueForaUmItem();
+                    }
+                    else
+                        throw new Exception("Labirinto sem resolução!");
 
                 }
 
