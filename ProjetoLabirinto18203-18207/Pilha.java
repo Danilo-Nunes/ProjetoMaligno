@@ -84,7 +84,7 @@ public class Pilha<Registro> implements Cloneable
 		Class<?>[] tiposDosParametrosFormais = null; // null pq clone tem 0 parâmetros, ou (Class<?>[])null
 		Method metodo = classe.getMethod("Clone", tiposDosParametrosFormais);
 		Object[] parametrosReais = null; // null pq clone tem 0 parâmetros
-		ret = (X)metodo.invoke(parametrosReais);
+		ret = (X)metodo.invoke(x,parametrosReais);
 	    }
 	    catch(NoSuchMethodException erro) // sei que não vai acontecer essa excessão então não vou tratar, mas tem que saber hein. aconteceria se escrevesse outra coisa no lugar de clone, clone não existisse
 	    {

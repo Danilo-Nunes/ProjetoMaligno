@@ -32,7 +32,7 @@ public class Program
 
         Pilha<Coordenadas> caminho = new Pilha<Coordenadas>(linhas*colunas);
 
-        Fila<Coordenadas> fila = new Fila<Coordenadas>(3);
+        
         Pilha<Fila<Cordenadas>> possibilidades = new Pilha<Fila<Cordenadas>>(linhas*colunas);
 
         int x = 0;
@@ -45,6 +45,22 @@ public class Program
 
        if(checarLabirinto())
         {
+            while(!terminou)
+            {
+              Movimentar(atual);  
+            }
+
+            Pilha<Coordenadas> inverso = new Pilha<Coordenadas>(linhas*colunas);
+
+            system.out.println("O Labirinto é resolvido nas seguintes coordenadas: ")
+
+            while(!caminho.isVazia())
+            {
+                inverso.guarde(caminho.getUmItem());
+                caminho.jogueForaUmItem();
+                println(inverso.getUmItem());
+            }
+
 
 
         }
@@ -119,6 +135,74 @@ public class Program
                     return true;
 
             return false;
+
+        }
+
+        private void Movimentar(Coordenadas atual)
+        {
+            Fila<Coordenadas> fila = new Fila<Coordenadas>(3);
+
+            //Se da pra mover na direção Y:
+
+            if(atual.getY + 1 < linhas)
+            {
+                if(labirinto[atual.getX][atual.getY+1] == " ")
+                {
+                    Coordenadas cord1 = new Coordenadas(atual.getX, atual.getY + 1);
+                    fila.guarde(cord1);              
+                }
+            }
+
+            if(atual.gety - 1 < -1)
+            {
+                if(labirinto[atual.getX][atual.gety-1])
+                {
+                Cordenadas cord2 = new Coordenadas(atual.getX, atual.getY - 1);
+                fila.guarde(cord2)
+                }
+            }
+            //Se pode se mover na direção X
+            if(atual.getX + 1 < colunas)
+            {
+                if(labirinto[atual.getX+1][atual.getY] == " ")
+                {
+                    Coordenadas cord3 = new Coordenadas(atual.getX+1, atual.getY);
+                    fila.guarde(cord3);
+                }
+            }
+
+            if(atual.getX - 1 > -1)
+            {
+                if(labirinto[atual.getX+1][atual.getY] == " ")
+                {
+                    Coordenadas cord4 = new Coordenadas(atual.getX-1, atual.getY);
+                    fila.guarde(cord4);
+                }
+            }
+            if(!fila.isVazia())
+                {
+                    atual = fila.getUmItem();
+                    fila.jogueForaUmItem();
+
+                    if(labirinto[atual.getX][atual.getY] != 'S')
+                        labirinto[atual.getX][atual.getY] = '*';
+                    else
+                        terminou = true;
+
+                    caminho.guarde(atual);
+
+                    possibilidades.guarde(fila);
+                }            
+            else
+                {
+                   atual = caminho.getUmItem();
+                   caminho.jogueForaUmItem();
+                   labirinto[atual.getX][atual.getY] = ' ';
+                   fila = possibilidades.getUmItem();
+                   possibilidades.jogueForaUmItem();
+
+                }
+
 
         }
     }
