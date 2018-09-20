@@ -1,9 +1,9 @@
-public class Coordenada
+public class Coordenadas
 {
-    private int x = 0;
-    private int y = 0;
+    private int x = 0; // abicssas
+    private int y = 0; // ordenadas
 
-    public Coordenada(int x, int y) throws Exception
+    public Coordenadas(int x, int y) throws Exception
     {
         if(x < 0 || y < 0 || x == null || y == null)
             throw new Exception("Coordenadas inválidas! Digite-as corretamente!");
@@ -14,7 +14,7 @@ public class Coordenada
 
     public String toString()
     {
-        return "(" + this.x + ", " + this.y + ")";
+        return "(" + this.x + ", " + this.y + ")"; // retorna par ordenado
     }
 
     public int getX()
