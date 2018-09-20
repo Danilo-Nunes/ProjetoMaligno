@@ -18,7 +18,8 @@ public class Program
         int linhas = 0;
         int colunas = 0;
 
-        char ch = file.read();
+        linhas = file.readLine();
+        colunas = file.readLine();
 
 
         char[][] labirinto;
