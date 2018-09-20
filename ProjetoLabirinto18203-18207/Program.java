@@ -16,7 +16,7 @@ public class Program
         BufferedReader file = new BufferedReader(new FileReader(arquivo));
 
         int linhas = 0;
-        int colunas = 0;boolean taSerto;
+        int colunas = 0;
 
         linhas = file.readLine();
         colunas = file.readLine();
@@ -38,7 +38,12 @@ public class Program
         int x = 0;
         int y = 0;
 
-        if(checarLabirinto())
+        Coordenadas atual = new Coordenadas(x, y);
+
+        boolean terminou = false;
+        boolean prosseguir = false;
+
+       if(checarLabirinto())
         {
 
 
