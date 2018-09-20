@@ -38,8 +38,9 @@ public class Program
         int x = 0;
         int y = 0;
 
-        if(checarE() && checarS())
+        if(checarLabirinto())
         {
+
 
         }
         else
@@ -48,60 +49,68 @@ public class Program
         }
 
 
-        private boolean checarE()
+        private boolean checarLabirinto()
         {
+            boolean temE = false;
+            boolean temS = false;
             for(int i = 0; i < colunas; i++)
                 if(labirinto[0][i] == 'E')
                 {   
                     x = 0;
                     y = i;
-                    return true;
+                    temE = true;
+                }
+                else if(labirinto[0][i] == 'S')
+                {
+                    temS = true;
                 }
 
+            if(temE && temS)
+                return true;
+
             for(int i = 0; i < linhas-1; i++)
-                if(labirinto[i][0] == 'E')
+                if(labirinto[i][0] == 'E' && !temE)
                 {   
                     x = i;
                     y = 0;
-                    return true;
+                    temE = true;
                 }
+                else if(labirinto[i][0] == 'S' && !temS)
+                {
+                    temS = true;
+                }
+
+                if(temE && temS)
+                    return true;
             
             for(int i = 0; i < colunas; i++)
-                if(labirinto[linhas - 1][i] == 'E')
+                if(labirinto[linhas - 1][i] == 'E' && !temE)
                 {   
                     x = linhas - 1;
                     y = i;
-                    return true;
+                    temE = true;
+                }
+                else if(labirinto[linhas - 1][i] == 'S' && !temS)
+                {
+                    temS = true;
                 }
 
+                if(temE && temS)
+                    return true;
+
             for(int i = 0; i < linhas; i++)
-                if(labirinto[i][colunas - 1] == 'E')
+                if(labirinto[i][colunas - 1] == 'E' && !temE)
                 {   
                     x = i;
                     y = colunas - 1;
-                    return true;
+                    temE = true;
+                }
+                else if(labirinto[i][colunas - 1] == 'S' && !temS)
+                {
+                    temS = true;
                 }
 
-            return false;
-
-        }
-
-        private boolean checarS()
-        {
-            for(int i = 0; i < colunas; i++)
-                if(labirinto[0][i] == 'S')
-                    return true;
-
-            for(int i = 0; i < linhas; i++)
-                if(labirinto[i][0] == 'S')
-                    return true;
-            
-            for(int i = 0; i < colunas; i++)
-                if(labirinto[linhas][i] == 'S')
-                    return true;
-
-            for(int i = 0; i < linhas; i++)
-                if(labirinto[i][colunas] == 'S')
+                if(temE && temS)
                     return true;
 
             return false;
