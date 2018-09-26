@@ -1,4 +1,4 @@
-package fila*;
+package fila;
 import java.lang.reflect.*;
 
 public class Fila<X> implements Cloneable

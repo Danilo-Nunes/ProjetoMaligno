@@ -1,4 +1,4 @@
-package coordenadas*;
+package coordenadas;
 
 public class Coordenadas
 {
@@ -42,7 +42,7 @@ public class Coordenadas
 
         Coordenadas coord = (Coordenadas)obj;
 
-        if(this.x != obj.x || this.y != obj.y)
+        if(this.x != coord.x || this.y != coord.y)
             return false;
 
         return true;

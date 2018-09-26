@@ -47,7 +47,7 @@ quando passamos um vetor sem posição indexada, vai todas as posições no par�
 a ordem também conta para sobrecarga dos métodos, além da quantidade e dos tipos de parâmetro
 vetores e objetos são variáveis que guardam endereços de memórias, são ponteiros
 */
-package pilha*;
+package pilha;
 import java.lang.reflect.*; // encontramos as classes que usamos, invoke e method
 
 public class Pilha<X> implements Cloneable
@@ -95,17 +95,23 @@ public class Pilha<X> implements Cloneable
 	    {
 
 	    }
+	    catch(Exception erro) // aconteceria se clone não existisse
+		{
+
+	    }
 	    return ret;
     }
-	public void guarde (Registro s)
-	{
-		if(s==null); // não precisa desse:  || s.equals("") pois é só em string
-		   throw new Exception("Informa��o ausente!");
-		if(isCheia())
-			throw new exception("N�mero m�ximo de capacidade atingido!");
 
-		if(s.instanceof Cloneable)
-			this.vetor[this.qtd] = (x)s.clone(); // vai dar pau, tem que contornar
+	public void guarde (X s) throws Exception
+	{
+		if(s==null) // não precisa desse:  || s.equals("") pois é só em string
+		   throw new Exception("Informa��o ausente!");
+
+		if(isCheia())
+			throw new Exception("N�mero m�ximo de capacidade atingido!");
+
+		if(s instanceof Cloneable) // é um comando, não método
+			this.vetor[this.qtd] = meuCloneDeX(s); // vai dar pau, tem que contornar
 		else
 			this.vetor[this.qtd] = s;
 		// this.vetor[this.qtd] = (Registro)s.clone();
@@ -113,19 +119,19 @@ public class Pilha<X> implements Cloneable
 		this.qtd++;
 	}
 
-	public X getUmItem()
+	public X getUmItem() throws Exception
 	{
 		if(isVazia())
 			throw new Exception("Nada a recuperar");
 
 		// return this.vetor[this.qtd-1];
 		if(this.vetor[this.qtd-1] instanceof Cloneable)
-			return meuCloneDeX((X) this.vetor[this.qtd-1].clone());
+			return meuCloneDeX((X)this.vetor[this.qtd-1]);
 		// else
-			return (X) this.vetor[this.qtd-1];
+			return (X)this.vetor[this.qtd-1];
 	}
 
-	public void jogueForaUmItem()
+	public void jogueForaUmItem() throws Exception
 	{
 		if(isVazia())
 		   throw new Exception ("N�o h� nada a se apagar!"); // = Exception problema; problema = new Exception("N�o h� nada a recuperar"); throw problema;
@@ -136,7 +142,7 @@ public class Pilha<X> implements Cloneable
 
 	public boolean isCheia()
 	{
-		return this.qtd == this.vetor.lenght;
+		return this.qtd == this.vetor.length;
 	}
 
 	public boolean isVazia()
@@ -170,9 +176,9 @@ public class Pilha<X> implements Cloneable
 
 		for(int i=0; i < this.qtd; i++)
 			if (!this.vetor[i].equals(pil.vetor[i]))
-				return false
+				return false;
 
-		return true
+		return true;
 
     }
 
@@ -196,16 +202,16 @@ public class Pilha<X> implements Cloneable
 			   throw new Exception("Modelo ausente");
 
 			this.qtd = modelo.qtd;
-			this.vetor = new Object[modelo.vetor.lenght]; // se não for assim teremos apenas um espaço ara jogar ponteiros, bagunçando tudo
+			this.vetor = new Object[modelo.vetor.length]; // se não for assim teremos apenas um espaço ara jogar ponteiros, bagunçando tudo
 
-			for(i = 0; i <= modelo.qtd; i++)
+			for(int i = 0; i <= modelo.qtd; i++)
 			{
 				this.vetor[i] = modelo.vetor[i];
 				// this.vetor[i] = new Horario(modelo.vetor[i]); -- para que todas as coisas sejam de fato clonadas, teria que ser esse, porém gasta mais memória.
 			}
 	    }
 
-	    public Registro clone()
+	    public Object clone()
 	    {
 			Pilha<X> ret = null;
 

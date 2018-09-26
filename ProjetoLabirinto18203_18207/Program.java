@@ -1,10 +1,19 @@
-import Pilha.*;
-import Fila.*;
-import Coordenadas.*;
+import pilha.*;
+import fila.*;
+import coordenadas.*;
 import java.io.*;
 
 public class Program
 {
+	static int linhas;
+    static int colunas;
+    static char labirinto[][];
+    static int x;
+    static int y;
+    static Coordenadas atual;
+    static boolean terminou;
+    static Pilha<Coordenadas> caminho;
+    static Pilha<Fila<Coordenadas>> possibilidades;
     //ver se é número
     static void main(String[] args) throws Exception
     {
@@ -13,35 +22,34 @@ public class Program
         System.out.println("Digite o caminho do arquivo onde o labirinto está: ");
         String diretorio = teclado.readLine();
 
-        BufferedReader file = new BufferedReader(new FileReader(arquivo));
+        BufferedReader file = new BufferedReader(new FileReader(diretorio));
 
-        int linhas = 0;
-        int colunas = 0;
+        linhas = 0;
+        colunas = 0;
 
-        linhas = file.readLine();
-        colunas = file.readLine();
+        linhas = Integer.parseInt(file.readLine()); // valueOf(); -- não nescessariamente é um ineteiro
+        colunas = Integer.parseInt(file.readLine());
 
 
-        char labirinto[][] = new char[linhas][colunas];
+        labirinto = new char[linhas][colunas];
 
         for(int i = 0; i < linhas; i++)
             for(int j = 0; j < colunas; j++)
-                labirinto[i][j] = file.read();
+                labirinto[i][j] = (char)(file.read()); // precisa ser lido como caracter
 
         file.close();
 
-        Pilha<Coordenadas> caminho = new Pilha<Coordenadas>(linhas*colunas);
+        caminho = new Pilha<Coordenadas>(linhas*colunas);
 
 
-        Pilha<Fila<Cordenadas>> possibilidades = new Pilha<Fila<Cordenadas>>(linhas*colunas);
+        possibilidades = new Pilha<Fila<Coordenadas>>(linhas*colunas);
 
-        int x = 0;
-        int y = 0;
+        x = 0;
+        y = 0;
 
-        Coordenadas atual = new Coordenadas(x, y);
+        atual = new Coordenadas(x, y);
 
-        boolean terminou = false;
-        boolean prosseguir = false;
+        terminou = false;
 
        if(checarLabirinto())
         {
@@ -52,13 +60,13 @@ public class Program
 
             Pilha<Coordenadas> inverso = new Pilha<Coordenadas>(linhas*colunas);
 
-            system.out.println("O Labirinto é resolvido nas seguintes coordenadas: ");
+            System.out.println("O Labirinto é resolvido nas seguintes coordenadas: ");
 
             while(!caminho.isVazia())
             {
                 inverso.guarde(caminho.getUmItem());
                 caminho.jogueForaUmItem();
-                println(inverso.getUmItem());
+                System.out.println(inverso.getUmItem());
             }
 
 
@@ -139,44 +147,44 @@ public class Program
 
         }
 
-        public static void Movimentar(Coordenadas atual) // throws Exception ???
+        public static void Movimentar(Coordenadas atual) throws Exception
         {
             Fila<Coordenadas> fila = new Fila<Coordenadas>(3);
 
             //Se da pra mover na direção Y:
 
-            if(atual.getY + 1 < linhas)
+            if(atual.getY() + 1 < linhas)
             {
-                if(labirinto[atual.getX][atual.getY+1] == " ")
+                if(labirinto[atual.getX()][atual.getY()+1] == ' ')
                 {
-                    Coordenadas cord1 = new Coordenadas(atual.getX, atual.getY + 1);
+                    Coordenadas cord1 = new Coordenadas(atual.getX(), atual.getY() + 1);
                     fila.guarde(cord1);
                 }
             }
 
-            if(atual.gety - 1 < -1)
+            if(atual.getY() - 1 < -1)
             {
-                if(labirinto[atual.getX][atual.gety-1])
+                if(labirinto[atual.getX()][atual.getY()-1] == ' ')
                 {
-                Cordenadas cord2 = new Coordenadas(atual.getX, atual.getY - 1);
+                Coordenadas cord2 = new Coordenadas(atual.getX(), atual.getY() - 1);
                 fila.guarde(cord2);
                 }
             }
             //Se pode se mover na direção X
-            if(atual.getX + 1 < colunas)
+            if(atual.getX() + 1 < colunas)
             {
-                if(labirinto[atual.getX+1][atual.getY] == " ")
+                if(labirinto[atual.getX()+1][atual.getY()] == ' ')
                 {
-                    Coordenadas cord3 = new Coordenadas(atual.getX+1, atual.getY);
+                    Coordenadas cord3 = new Coordenadas(atual.getX()+1, atual.getY());
                     fila.guarde(cord3);
                 }
             }
 
-            if(atual.getX - 1 > -1)
+            if(atual.getX() - 1 > -1)
             {
-                if(labirinto[atual.getX+1][atual.getY] == " ")
+                if(labirinto[atual.getX()+1][atual.getY()] == ' ')
                 {
-                    Coordenadas cord4 = new Coordenadas(atual.getX-1, atual.getY);
+                    Coordenadas cord4 = new Coordenadas(atual.getX()-1, atual.getY());
                     fila.guarde(cord4);
                 }
             }
@@ -185,8 +193,8 @@ public class Program
                     atual = fila.getUmItem();
                     fila.jogueForaUmItem();
 
-                    if(labirinto[atual.getX][atual.getY] != 'S')
-                        labirinto[atual.getX][atual.getY] = '*';
+                    if(labirinto[atual.getX()][atual.getY()] != 'S')
+                        labirinto[atual.getX()][atual.getY()] = '*';
                     else
                         terminou = true;
 
@@ -200,7 +208,7 @@ public class Program
                     {
                     atual = caminho.getUmItem();
                     caminho.jogueForaUmItem();
-                    labirinto[atual.getX][atual.getY] = ' ';
+                    labirinto[atual.getX()][atual.getY()] = ' ';
                     fila = possibilidades.getUmItem();
                     possibilidades.jogueForaUmItem();
                     }
