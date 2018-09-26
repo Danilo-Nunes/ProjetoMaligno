@@ -68,9 +68,10 @@ public class Program
         {
             throw new Exception("Entrada ou saída não encontradas");
         }
+    }
 
 
-        private boolean checarLabirinto()
+        public static boolean checarLabirinto()
         {
             boolean temE = false;
             boolean temS = false;
@@ -138,7 +139,7 @@ public class Program
 
         }
 
-        private void Movimentar(Coordenadas atual) // throws Exception ???
+        public static void Movimentar(Coordenadas atual) // throws Exception ???
         {
             Fila<Coordenadas> fila = new Fila<Coordenadas>(3);
 
@@ -209,4 +210,3 @@ public class Program
                 }
         }
     }
-}

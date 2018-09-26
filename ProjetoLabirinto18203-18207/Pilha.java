@@ -103,7 +103,7 @@ public class Pilha<Registro> implements Cloneable
 		if(isCheia())
 			throw new exception("N�mero m�ximo de capacidade atingido!");
 
-		if(s.instanceof Cloneable)
+		if(s instanceof Cloneable)
 			this.vetor[this.qtd] = (x)s.clone(); // vai dar pau, tem que contornar
 		else
 			this.vetor[this.qtd] = s;
@@ -169,9 +169,9 @@ public class Pilha<Registro> implements Cloneable
 
 		for(int i=0; i < this.qtd; i++)
 			if (!this.vetor[i].equals(pil.vetor[i]))
-				return false
+				return false;
 
-		return true
+		return true;
 
     }
 

@@ -1,44 +1,45 @@
-      public class Fila<X> implements Cloneable
+import java.lang.reflect.*;
+
+public class Fila3<X> implements Cloneable
 {
-	protected Object[] vetor;
-	protected int qtd = 0;
-	protected int inicio = 0;
-    protected int fim = 0;
+	    private Object[] vetor;  //private String[] vetor --> ainda não tem tamanho
+	    private int qtd = 0;
+	    private int inicio = 0;
+	    private int fim = 0;
 
-	public Fila(int capacidade) throws Exception
-	{
-		if(capacidade < 0)
-			throw new Exception("Capacidade invalida");
+	    public Fila3(int capacidade) throws Exception
+	    {
+			if(capacidade < 0)
+			   throw new Exception("Capacidade inválida");
 
-		this.vetor = new Object[capacidade];
-	}
+			this.vetor = new Object[capacidade];
+		}
 
-	protected X meuCloneDeX(X x)
-	{
-		X ret = null;
-		try
+		private void meuCloneDeX(X x)
 		{
-		// agora o que quero fazer de um jeito DEMONIACO Ã© return x.clone();
-		Class<?> classe = x.getClass();
-		Class<?>[] tiposDosParametrosFormais = null; // null pq clone tem 0 parÃ¢metros, ou (Class<?>[])null
-		Method metodo = classe.getMethod("Clone", tiposDosParametrosFormais);
-		Object[] parametrosReais = null; // null pq clone tem 0 parÃ¢metros
-		ret = (X)metodo.invoke(parametrosReais);
-	    }
-	    catch(NoSuchMethodException erro) // sei que nÃ£o vai acontecer essa excessÃ£o entÃ£o nÃ£o vou tratar, mas tem que saber hein. aconteceria se escrevesse outra coisa no lugar de clone, clone nÃ£o existisse
-	    {}
-	    catch(IllegalAccessException erro) // aconteceria se clone nÃ£o existisse
-	    {}
-		catch(InvocationTargetException erro)
-		{}
+			X ret = null;
+			try
+			{
+				Class<?> classe = x.getClass();
+				Class<?>[] tiposDeParametrosFormais = null;
+				Method metodo = classe.getMethod("clone", tiposDeParametrosFormais);
+				Object<?>[] tiposDeParametrosReais = null;
+				ret = (X)metodo.invoke(x,tiposDeParametrosReais);
+			}
+			catch(NoSuchMethodException erro)
+			{}
+			catch(IllegalAccessException erro)
+			{}
+			catch(InvocationTargetException erro)
+			{}
 
-	    return ret;
-    }
+			return ret;
+		}
 
-	public void guarde (X s)
-	{
-		if(s==null) // s.equals antes nï¿½o daria certo, pois se ele for null vai dar errado jï¿½ que nï¿½o se pode chamar mï¿½todo para objeto null
-			   throw new Exception("Informaï¿½ï¿½o ausente");
+	    public void guarde(X s) throws Exception
+	    {
+			if(s==null) // s.equals antes não daria certo, pois se ele for null vai dar errado já que não se pode chamar método para objeto null
+			   throw new Exception("Informação ausente");
 
 			if(this.isCheia())
 			   throw new Exception("Fila3 cheia");
@@ -66,25 +67,25 @@
 					this.vetor[this.fim++] = s;
 			}
 			this.qtd++;
-	}
+	    }
 
-	public X getUmItem()
-	{
-		if(this.isVazia())
+	    public X getUmItem() throws Exception
+	    {
+			if(this.isVazia())
 			   throw new Exception("Nada a recuperar");
 
 	        if(this.vetor[this.inicio] instanceof Cloneable)
 	        	return meuCloneDeX((X)this.vetor[this.inicio]);
 
 	        return (X)this.vetor[this.inicio];
-	}
+	    }
 
-	public void jogueForaUmItem()
-	{
-		if(isVazia())
-		   throw new Exception ("Nao ha nada a se apagar!");
+	    public void jogueForaUmItem() throws Exception
+	    {
+			if(this.isVazia())
+			   throw new Exception("Pilha vazia");
 
-        this.vetor[this.inicio] = null;
+			this.vetor[this.inicio] = null;
 
 			if(this.inicio == this.vetor.length-1)
 			   inicio = 0;
@@ -92,43 +93,43 @@
 				inicio++;
 
 	        qtd--;
-	}
+	    }
 
-	public boolean isCheia()
-	{
-		return this.qtd == this.vetor.lenght;
-	}
+	    public boolean isCheia()
+	    {
+			return this.qtd == this.vetor.length;
+		}
 
-	public boolean isVazia()
-	{
-		return this.qtd == 0;
-	}
+	    public boolean isVazia()
+	    {
+			return this.qtd == 0;
+		}
 
-	public String toString()
-	{
-		if(this.qtd == 0)
-		   return "vazia";
+		public String toString()
+		{
+			if(this.qtd==0)
+			   return "Vazia";
 
-	    return this.qtd + " elementos, sendo o ultimo " + this.vetor[this.qtd-1];
-    }
+			return this.qtd+" elementos, sendo o primeiro "+this.vetor[inicio];
+		}
 
-    public boolean equals(Object obj)
-    {
-		if(this==obj)
-			return true;
+		public boolean equals (Object obj) //compara this e obj
+		{
+			if(this==obj) //dispensável, mas deixa método mais rápido
+			   return true;
 
-		if(obj==null)
-			return false;
+			if(obj == null)
+			   return false;
 
-		if(this.getClass()!= obj.getClass())
-			return false;
+			if(this.getClass()!=obj.getClass())
+			   return false;
 
-		Fila2<X> fila = (Fila2<X>)obj; // java enxerga que existe uma Fila2 chamada fila (que ï¿½ o mesmo obj)
+			Fila3<X> fila = (Fila3<X>)obj; // java enxerga que existe uma Fila3 chamada fila (que é o mesmo obj)
 
-		if(this.qtd != fila.qtd)
-			return false;
+	        if(this.qtd!=fila.qtd)
+	           return false;
 
-		for(int i = 0,
+	        for(int i = 0,
 	                posThis=this.inicio,
 	                posFila=fila.inicio;
 
@@ -141,23 +142,23 @@
 	           if(!this.vetor[posThis].equals(fila.vetor[posFila]))
 	              return false;
 
-		return true;
+	        return true;
+		}
 
-    }
+		public int hashCode()
+		{
+			int ret = 1; //só não pode ser 0
 
-    public int hashCode()
-    {
-		int ret = 666;
+			ret = ret * 2 + new Integer(this.qtd).hashCode();
 
-		ret = ret*2 + new Integer(this.qtd).hashCode();
+			for(int i=0, pos=inicio; i<this.qtd; i++, pos=(pos<vetor.length-1?pos+1:0))
+				ret = ret*2 + this.vetor[pos].hashCode();
 
-		for(int i = 0, pos=inÃ­cio; i < this.qtd; i++, pos=(qtd<vetor.lenght?pos+1:0)) //  this foi omitido e pode ser omitido
-		      ret = ret*2 + this.vetor[pos].hashCode();
-		return ret;
-	}
+			return ret;
+		}
 
-	    public Fila(Fila modelo) throws Exception
-	    {
+		public Fila3 (Fila3<X> modelo) throws Exception
+		{
 			if(modelo == null)
 		    	throw new Exception("Modelo ausente");
 
@@ -171,10 +172,10 @@
 
 			for(int i=0; i<modelo.vetor.length-1; i++)
 		    	this.vetor[i] = modelo.vetor[i];
-	    }
+		}
 
-	    public Object clone()
-	    {
+		public Object clone()
+		{
 			Fila3<X> ret = null;
 			try
 			{
@@ -184,5 +185,6 @@
 			{}
 
 			return ret;
-        }
+		}
+
 }
