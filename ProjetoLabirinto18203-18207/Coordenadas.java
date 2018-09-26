@@ -1,3 +1,5 @@
+package coordenadas*;
+
 public class Coordenadas
 {
     protected int x = 0; // abicssas

@@ -47,6 +47,7 @@ quando passamos um vetor sem posição indexada, vai todas as posições no par�
 a ordem também conta para sobrecarga dos métodos, além da quantidade e dos tipos de parâmetro
 vetores e objetos são variáveis que guardam endereços de memórias, são ponteiros
 */
+package pilha*;
 import java.lang.reflect.*; // encontramos as classes que usamos, invoke e method
 
 public class Pilha<X> implements Cloneable
