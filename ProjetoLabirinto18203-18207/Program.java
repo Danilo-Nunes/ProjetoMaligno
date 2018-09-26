@@ -3,7 +3,7 @@ import Fila.*;
 import Coordenadas.*;
 import java.io.*;
 
-public class Program 
+public class Program
 {
     //ver se é número
     static void main(String[] args) throws Exception
@@ -32,7 +32,7 @@ public class Program
 
         Pilha<Coordenadas> caminho = new Pilha<Coordenadas>(linhas*colunas);
 
-        
+
         Pilha<Fila<Cordenadas>> possibilidades = new Pilha<Fila<Cordenadas>>(linhas*colunas);
 
         int x = 0;
@@ -47,12 +47,12 @@ public class Program
         {
             while(!terminou)
             {
-              Movimentar(atual);  
+              Movimentar(atual);
             }
 
             Pilha<Coordenadas> inverso = new Pilha<Coordenadas>(linhas*colunas);
 
-            system.out.println("O Labirinto é resolvido nas seguintes coordenadas: ")
+            system.out.println("O Labirinto é resolvido nas seguintes coordenadas: ");
 
             while(!caminho.isVazia())
             {
@@ -76,7 +76,7 @@ public class Program
             boolean temS = false;
             for(int i = 0; i < colunas; i++)
                 if(labirinto[0][i] == 'E')
-                {   
+                {
                     x = 0;
                     y = i;
                     temE = true;
@@ -91,7 +91,7 @@ public class Program
 
             for(int i = 0; i < linhas-1; i++)
                 if(labirinto[i][0] == 'E' && !temE)
-                {   
+                {
                     x = i;
                     y = 0;
                     temE = true;
@@ -103,10 +103,10 @@ public class Program
 
                 if(temE && temS)
                     return true;
-            
+
             for(int i = 0; i < colunas; i++)
                 if(labirinto[linhas - 1][i] == 'E' && !temE)
-                {   
+                {
                     x = linhas - 1;
                     y = i;
                     temE = true;
@@ -121,7 +121,7 @@ public class Program
 
             for(int i = 0; i < linhas; i++)
                 if(labirinto[i][colunas - 1] == 'E' && !temE)
-                {   
+                {
                     x = i;
                     y = colunas - 1;
                     temE = true;
@@ -149,7 +149,7 @@ public class Program
                 if(labirinto[atual.getX][atual.getY+1] == " ")
                 {
                     Coordenadas cord1 = new Coordenadas(atual.getX, atual.getY + 1);
-                    fila.guarde(cord1);              
+                    fila.guarde(cord1);
                 }
             }
 
@@ -158,7 +158,7 @@ public class Program
                 if(labirinto[atual.getX][atual.gety-1])
                 {
                 Cordenadas cord2 = new Coordenadas(atual.getX, atual.getY - 1);
-                fila.guarde(cord2)
+                fila.guarde(cord2);
                 }
             }
             //Se pode se mover na direção X
@@ -192,7 +192,7 @@ public class Program
                     caminho.guarde(atual);
 
                     possibilidades.guarde(fila);
-                }            
+                }
             else
                 {
                     if(!possibilidades.isVazia())
@@ -207,8 +207,6 @@ public class Program
                         throw new Exception("Labirinto sem resolução!");
 
                 }
-
-
         }
     }
 }

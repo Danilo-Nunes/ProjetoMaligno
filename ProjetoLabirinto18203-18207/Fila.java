@@ -1,9 +1,9 @@
       public class Fila<X> implements Cloneable
 {
-	private Object[] vetor;
-	private int qtd = 0;
-	private int inicio = 0;
-    private int fim = 0;
+	protected Object[] vetor;
+	protected int qtd = 0;
+	protected int inicio = 0;
+    protected int fim = 0;
 
 	public Fila(int capacidade) throws Exception
 	{
@@ -12,8 +12,8 @@
 
 		this.vetor = new Object[capacidade];
 	}
-    
-	private X meuCloneDeX(X x)
+
+	protected X meuCloneDeX(X x)
 	{
 		X ret = null;
 		try
@@ -82,7 +82,7 @@
 	public void jogueForaUmItem()
 	{
 		if(isVazia())
-		   throw new Exception ("Nao ha nada a se apagar!"); 
+		   throw new Exception ("Nao ha nada a se apagar!");
 
         this.vetor[this.inicio] = null;
 
@@ -141,18 +141,18 @@
 	           if(!this.vetor[posThis].equals(fila.vetor[posFila]))
 	              return false;
 
-		return true
+		return true;
 
     }
 
     public int hashCode()
     {
-		int ret = 666; 
+		int ret = 666;
 
-		ret = ret*2 + new Integer(this.qtd).hashCode(); 
+		ret = ret*2 + new Integer(this.qtd).hashCode();
 
 		for(int i = 0, pos=início; i < this.qtd; i++, pos=(qtd<vetor.lenght?pos+1:0)) //  this foi omitido e pode ser omitido
-		      ret = ret*2 + this.vetor[pos].hashCode(); 
+		      ret = ret*2 + this.vetor[pos].hashCode();
 		return ret;
 	}
 
@@ -184,5 +184,5 @@
 			{}
 
 			return ret;
-        }   
+        }
 }

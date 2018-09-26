@@ -1,11 +1,11 @@
 public class Coordenadas
 {
-    private int x = 0; // abicssas
-    private int y = 0; // ordenadas
+    protected int x = 0; // abicssas
+    protected int y = 0; // ordenadas
 
     public Coordenadas(int x, int y) throws Exception
     {
-        if(x < 0 || y < 0 || x == null || y == null)
+        if(x < 0 || y < 0 || new Integer(x).equals(null) || new Integer(y).equals(null))
             throw new Exception("Coordenadas inválidas! Digite-as corretamente!");
 
         this.x = x;
@@ -31,16 +31,16 @@ public class Coordenadas
     {
         if(this == obj)
             return true;
-        
+
         if(obj == null)
             return false;
 
         if(this.getClass() != obj.getClass())
             return false;
 
-        Coordenada coord = (Coordenada)obj;
+        Coordenadas coord = (Coordenadas)obj;
 
-        if(this.x != obj.x || this.y != obj.y)
+        if(this.x != coord.x || this.y != coord.y)
             return false;
 
         return true;

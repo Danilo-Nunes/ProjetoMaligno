@@ -51,8 +51,8 @@ import java.lang.reflect.*; // encontramos as classes que usamos, invoke e metho
 
 public class Pilha<Registro> implements Cloneable
 {
-	private Horario[] vetor;
-	private int qtd = 0;
+	protected Horario[] vetor;
+	protected int qtd = 0;
 
 	public Pilha(int capacidade) throws Exception
 	{
@@ -74,7 +74,7 @@ public class Pilha<Registro> implements Cloneable
 		}
 	}
 	*/
-	private X meuCloneDeX(X x)
+	protected X meuCloneDeX(X x)
 	{
 		X ret = null;
 		try
