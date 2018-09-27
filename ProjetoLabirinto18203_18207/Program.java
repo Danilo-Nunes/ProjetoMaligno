@@ -2,8 +2,9 @@ import pilha.*;
 import fila.*;
 import coordenadas.*;
 import java.io.*;
+import java.util.*; // string builder
 
-public class Program
+public class Program // fazer to string para mostrar o labirinto
 {
 	static int linhas;
     static int colunas;
@@ -15,67 +16,76 @@ public class Program
     static Pilha<Coordenadas> caminho;
     static Pilha<Fila<Coordenadas>> possibilidades;
     //ver se é número
-    static void main(String[] args) throws Exception
+    public static void main(String[] args) // throws Exception buga, n fununcia nd
     {
-        BufferedReader teclado = new BufferedReader(new InputStreamReader(System.in));
-        // corrigir convenções do java para simbolos
-        System.out.println("Digite o caminho do arquivo onde o labirinto está: ");
-        String diretorio = teclado.readLine();
+		try
+		{
+            BufferedReader teclado = new BufferedReader(new InputStreamReader(System.in));
+            // corrigir convenções do java para simbolos
+            System.out.println("Digite o caminho do arquivo onde o labirinto está: ");
+            String diretorio = teclado.readLine();
 
-        BufferedReader file = new BufferedReader(new FileReader(diretorio));
+            BufferedReader file = new BufferedReader(new FileReader(diretorio));
 
-        linhas = 0;
-        colunas = 0;
+            linhas = 0;
+            colunas = 0;
 
-        linhas = Integer.parseInt(file.readLine()); // valueOf(); -- não nescessariamente é um ineteiro
-        colunas = Integer.parseInt(file.readLine());
-
-
-        labirinto = new char[linhas][colunas];
-
-        for(int i = 0; i < linhas; i++)
-            for(int j = 0; j < colunas; j++)
-                labirinto[i][j] = (char)(file.read()); // precisa ser lido como caracter
-
-        file.close();
-
-        caminho = new Pilha<Coordenadas>(linhas*colunas);
+            linhas = Integer.parseInt(file.readLine()); // valueOf(); -- não nescessariamente é um ineteiro
+            colunas = Integer.parseInt(file.readLine());
 
 
-        possibilidades = new Pilha<Fila<Coordenadas>>(linhas*colunas);
+            labirinto = new char[linhas][colunas];
 
-        x = 0;
-        y = 0;
+            for(int i = 0; i < linhas; i++)
+                for(int j = 0; j < colunas; j++)
+                    labirinto[i][j] = (char)(file.read()); // precisa ser lido como caracter
 
-        atual = new Coordenadas(x, y);
+            file.close();
 
-        terminou = false;
+            caminho = new Pilha<Coordenadas>(linhas*colunas);
 
-       if(checarLabirinto())
-        {
-            while(!terminou)
+
+            possibilidades = new Pilha<Fila<Coordenadas>>(linhas*colunas);
+
+            x = 0;
+            y = 0;
+
+            atual = new Coordenadas(x, y);
+
+            terminou = false;
+
+            if(checarLabirinto())
             {
-              Movimentar(atual);
+                while(!terminou)
+                {
+                    Movimentar(atual);
+                }
+
+                Pilha<Coordenadas> inverso = new Pilha<Coordenadas>(linhas*colunas);
+
+                System.out.println("O Labirinto é resolvido nas seguintes coordenadas: \n");
+
+                while(!caminho.isVazia())
+                {
+                    inverso.guarde(caminho.getUmItem());
+                    caminho.jogueForaUmItem();
+                    System.out.println(inverso.getUmItem());
+                }
             }
-
-            Pilha<Coordenadas> inverso = new Pilha<Coordenadas>(linhas*colunas);
-
-            System.out.println("O Labirinto é resolvido nas seguintes coordenadas: ");
-
-            while(!caminho.isVazia())
+            else
             {
-                inverso.guarde(caminho.getUmItem());
-                caminho.jogueForaUmItem();
-                System.out.println(inverso.getUmItem());
-            }
+                throw new Exception("Entrada ou saída não encontradas");
+            }           
 
+            System.out.println("\nLabirinto Resolvido: \n");
 
-
-        }
-        else
+            toString(); // this não é statico
+	    }
+        catch(Exception erro)
         {
-            throw new Exception("Entrada ou saída não encontradas");
+            System.out.println(erro);
         }
+
     }
 
 
@@ -144,11 +154,10 @@ public class Program
                     return true;
 
             return false;
-
         }
 
         public static void Movimentar(Coordenadas atual) throws Exception
-        {
+        {//empilhar
             Fila<Coordenadas> fila = new Fila<Coordenadas>(3);
 
             //Se da pra mover na direção Y:
@@ -187,7 +196,7 @@ public class Program
                     Coordenadas cord4 = new Coordenadas(atual.getX()-1, atual.getY());
                     fila.guarde(cord4);
                 }
-            }
+            }//resolva
             if(!fila.isVazia())
                 {
                     atual = fila.getUmItem();
@@ -216,5 +225,20 @@ public class Program
                         throw new Exception("Labirinto sem resolução!");
 
                 }
+        }
+
+        public static String toString() // verificar esse e o try catch
+        {
+            StringBuilder ret = new StringBuilder();
+
+            for ( int i = 0; i <= this.labirinto.length-1; i++) {
+                for ( int j = 0; j <= this.labirinto[i].length-1; j++) {
+                    ret.append(this.labirinto[i][j]);
+                }
+                ret.append('\n');
+            }
+
+            ret.append(this.caminho.toString());//a Plha<Coordenada> inverso estava mostrando o caminho invertido (da saida para a entrada),
+            return ret.toString();              //entao, para exibir na ordem certa, nao precisou cria-la.
         }
     }
