@@ -231,14 +231,14 @@ public class Program
         {
             StringBuilder ret = new StringBuilder();
 
-            for ( int i = 0; i <= this.labirinto.length-1; i++) {
-                for ( int j = 0; j <= this.labirinto[i].length-1; j++) {
-                    ret.append(this.labirinto[i][j]);
+            for ( int i = 0; i <= labirinto.length-1; i++) {
+                for ( int j = 0; j <= labirinto[i].length-1; j++) {
+                    ret.append(labirinto[i][j]);
                 }
                 ret.append('\n');
             }
 
-            ret.append(this.caminho.toString());//a Plha<Coordenada> inverso estava mostrando o caminho invertido (da saida para a entrada),
+            ret.append(caminho.toString());//a Plha<Coordenada> inverso estava mostrando o caminho invertido (da saida para a entrada),
             return ret.toString();              //entao, para exibir na ordem certa, nao precisou cria-la.
         }
     }
