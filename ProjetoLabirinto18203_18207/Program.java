@@ -1,20 +1,12 @@
 import pilha.*;
 import fila.*;
 import coordenadas.*;
+import labirinto.*;
 import java.io.*;
 import java.util.*; // string builder
 
 public class Program
 {
-	static int linhas;
-    static int colunas;
-    static char labirinto[][];
-    static int x;
-    static int y;
-    static Coordenadas atual;
-    static boolean terminou;
-    static Pilha<Coordenadas> caminho;
-    static Pilha<Fila<Coordenadas>> possibilidades;
     //ver se é número
     public static void main(String[] args)
     {
@@ -24,43 +16,30 @@ public class Program
             // corrigir convenções do java para simbolos
             System.out.println("Digite o caminho do arquivo onde o labirinto está: ");
             String diretorio = teclado.readLine();
-
             BufferedReader file = new BufferedReader(new FileReader(diretorio));
 
-            linhas = 0;
-            colunas = 0;
+            int linhas = Integer.parseInt(file.readLine()); // valueOf(); -- não nescessariamente é um ineteiro
+            int colunas = Integer.parseInt(file.readLine());
 
-            linhas = Integer.parseInt(file.readLine()); // valueOf(); -- não nescessariamente é um ineteiro
-            colunas = Integer.parseInt(file.readLine());
-
-
-            labirinto = new char[linhas][colunas];
+            char labirinto[][] = new char[linhas][colunas];
 
             for(int i = 0; i < linhas; i++)
+            {
+                String str = file.readLine();
                 for(int j = 0; j < colunas; j++)
-                    labirinto[i][j] = (char)(file.read()); // precisa ser lido como caracter
-
+                    labirinto[i][j] = str.charAt(j); // precisa ser lido como caracter
+            }
             file.close();
 
-            caminho = new Pilha<Coordenadas>(linhas*colunas);
-
-
-            possibilidades = new Pilha<Fila<Coordenadas>>(linhas*colunas);
-
-            x = 0;
-            y = 0;
-
-            atual = new Coordenadas(x, y);
+            Labirinto-+ lab = new Labirinto(labirinto, linhas, colunas);
 
             terminou = false;
-
-            if(checarLabirinto())
+            if(lab.checarLabirinto())
             {
                 while(!terminou)
                 {
-                    Movimentar(atual);
+                    //Movimentar(atual);
                 }
-
                 Pilha<Coordenadas> inverso = new Pilha<Coordenadas>(linhas*colunas);
 
                 System.out.println("O Labirinto é resolvido nas seguintes coordenadas: \n");
@@ -77,9 +56,9 @@ public class Program
                 throw new Exception("Entrada ou saída não encontradas");
             }
 
-            System.out.println("\nLabirinto Resolvido: \n");
-
-            escreverLabirinto(); // this não é statico
+            PrintStream resultado = new PrintWriter(new FileWriter(diretorio + ".res.txt"));
+            resultado.println(lab.toString());
+            resultado.close();
 	    }
         catch(Exception erro)
         {
@@ -87,81 +66,6 @@ public class Program
         }
 
     }
-
-
-        public static boolean checarLabirinto()
-        {
- 			int saidas = 0;
-	 		int entradas = 0;
-
-	 		boolean temUm = false;
-
-	     	//  primeira linha
-	     	for (int i = 1; i <= labirinto[0].length-2; i++) // procura apenas 1 vez
-	     	{
-	             if (labirinto[0][i] == 'E') {
-	                     entradas++;
-
-	                     x = i;
-	                     y = 0;
-	             }
-	             if (labirinto[0][i] == 'S') {
-	                     saidas++;
-	             }
-	     	}
-
-	     	//  primeira coluna
-	 		for (int i = 0; i <= labirinto.length-1; i++)
-	 		{
-	     		if (labirinto[i][0] == 'E')
-	     		{
-	     			entradas++;
-
-	     			x = 0;
-	     			y = i;
-	     		}
-	     		if (labirinto[i][0] == 'S')
-	     		{
-	 				saidas++;
-	     		}
-	     	}
-
-	     	// ultima linha
-			for (int i = 1; i <= labirinto[0].length-2; i++) // procura apenas 1 vez
-			{
-				 if(labirinto[labirinto.length-1][i] == 'E')
-				 {
-				     entradas++;
-
-				     x = i;
-				     y = linhas;
-				 }
-				 if(labirinto[labirinto.length-1][i] == 'S')
-				 {
-				 	saidas++;
-				 }
-	     	}
-
-	     	// ultima coluna
-	 		for (int i = 0; i <= labirinto.length-1; i++)
-	 		{
-	     		if(labirinto[i][labirinto[0].length-1] == 'E') {
-	     			entradas++;
-
-	     			x = colunas;
-	     			y = i;
-	     		}
-	     		if(labirinto[i][labirinto[0].length-1] == 'S')
-	     		{
-	 				saidas++;
-	     		}
-	     	}
-
-	     	if (entradas == 1 && saidas ==1)
-	     		temUm = true;
-
-    		return temUm;
-        }
 
         public static void Movimentar(Coordenadas atual) throws Exception
         {//empilhar
@@ -235,7 +139,7 @@ public class Program
         }
 
 
-        public static String escreverLabirinto() // static não pode dar override
+       /* public static String escreverLabirinto() // static não pode dar override
         {
             StringBuilder ret = new StringBuilder();
 
@@ -248,5 +152,5 @@ public class Program
 
             ret.append(caminho.toString());//a Plha<Coordenada> inverso estava mostrando o caminho invertido (da saida para a entrada),
             return ret.toString();              //entao, para exibir na ordem certa, nao precisou cria-la.
-        }
+        }*/
     }
