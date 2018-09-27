@@ -79,7 +79,7 @@ public class Program
 
             System.out.println("\nLabirinto Resolvido: \n");
 
-            toString(); // this não é statico
+            escreverLabirinto(); // this não é statico
 	    }
         catch(Exception erro)
         {
@@ -91,69 +91,76 @@ public class Program
 
         public static boolean checarLabirinto()
         {
-            boolean temE = false;
-            boolean temS = false;
-            for(int i = 0; i < colunas; i++)
-                if(labirinto[0][i] == 'E')
-                {
-                    x = 0;
-                    y = i;
-                    temE = true;
-                }
-                else if(labirinto[0][i] == 'S')
-                {
-                    temS = true;
-                }
+ 			int saidas = 0;
+	 		int entradas = 0;
 
-            if(temE && temS)
-                return true;
+	 		boolean temUm = false;
 
-            for(int i = 0; i < linhas-1; i++)
-                if(labirinto[i][0] == 'E' && !temE)
-                {
-                    x = i;
-                    y = 0;
-                    temE = true;
-                }
-                else if(labirinto[i][0] == 'S' && !temS)
-                {
-                    temS = true;
-                }
+	     	//  primeira linha
+	     	for (int i = 1; i <= labirinto[0].length-2; i++) // procura apenas 1 vez
+	     	{
+	             if (labirinto[0][i] == 'E') {
+	                     entradas++;
 
-                if(temE && temS)
-                    return true;
+	                     x = i;
+	                     y = 0;
+	             }
+	             if (labirinto[0][i] == 'S') {
+	                     saidas++;
+	             }
+	     	}
 
-            for(int i = 0; i < colunas; i++)
-                if(labirinto[linhas - 1][i] == 'E' && !temE)
-                {
-                    x = linhas - 1;
-                    y = i;
-                    temE = true;
-                }
-                else if(labirinto[linhas - 1][i] == 'S' && !temS)
-                {
-                    temS = true;
-                }
+	     	//  primeira coluna
+	 		for (int i = 0; i <= labirinto.length-1; i++)
+	 		{
+	     		if (labirinto[i][0] == 'E')
+	     		{
+	     			entradas++;
 
-                if(temE && temS)
-                    return true;
+	     			x = 0;
+	     			y = i;
+	     		}
+	     		if (labirinto[i][0] == 'S')
+	     		{
+	 				saidas++;
+	     		}
+	     	}
 
-            for(int i = 0; i < linhas; i++)
-                if(labirinto[i][colunas - 1] == 'E' && !temE)
-                {
-                    x = i;
-                    y = colunas - 1;
-                    temE = true;
-                }
-                else if(labirinto[i][colunas - 1] == 'S' && !temS)
-                {
-                    temS = true;
-                }
+	     	// ultima linha
+			for (int i = 1; i <= labirinto[0].length-2; i++) // procura apenas 1 vez
+			{
+				 if(labirinto[labirinto.length-1][i] == 'E')
+				 {
+				     entradas++;
 
-                if(temE && temS)
-                    return true;
+				     x = i;
+				     y = linhas;
+				 }
+				 if(labirinto[labirinto.length-1][i] == 'S')
+				 {
+				 	saidas++;
+				 }
+	     	}
 
-            return false;
+	     	// ultima coluna
+	 		for (int i = 0; i <= labirinto.length-1; i++)
+	 		{
+	     		if(labirinto[i][labirinto[0].length-1] == 'E') {
+	     			entradas++;
+
+	     			x = colunas;
+	     			y = i;
+	     		}
+	     		if(labirinto[i][labirinto[0].length-1] == 'S')
+	     		{
+	 				saidas++;
+	     		}
+	     	}
+
+	     	if (entradas == 1 && saidas ==1)
+	     		temUm = true;
+
+    		return temUm;
         }
 
         public static void Movimentar(Coordenadas atual) throws Exception
@@ -166,8 +173,8 @@ public class Program
             {
                 if(labirinto[atual.getX()][atual.getY()+1] == ' ')
                 {
-                    Coordenadas cord1 = new Coordenadas(atual.getX(), atual.getY() + 1);
-                    fila.guarde(cord1);
+                    Coordenadas cord = new Coordenadas(atual.getX(), atual.getY() + 1);
+                    fila.guarde(cord);
                 }
             }
 
@@ -175,8 +182,8 @@ public class Program
             {
                 if(labirinto[atual.getX()][atual.getY()-1] == ' ')
                 {
-                Coordenadas cord2 = new Coordenadas(atual.getX(), atual.getY() - 1);
-                fila.guarde(cord2);
+                Coordenadas cord = new Coordenadas(atual.getX(), atual.getY() - 1);
+                fila.guarde(cord);
                 }
             }
             //Se pode se mover na direção X
@@ -184,8 +191,8 @@ public class Program
             {
                 if(labirinto[atual.getX()+1][atual.getY()] == ' ')
                 {
-                    Coordenadas cord3 = new Coordenadas(atual.getX()+1, atual.getY());
-                    fila.guarde(cord3);
+                    Coordenadas cord = new Coordenadas(atual.getX()+1, atual.getY());
+                    fila.guarde(cord);
                 }
             }
 
@@ -193,10 +200,10 @@ public class Program
             {
                 if(labirinto[atual.getX()+1][atual.getY()] == ' ')
                 {
-                    Coordenadas cord4 = new Coordenadas(atual.getX()-1, atual.getY());
-                    fila.guarde(cord4);
+                    Coordenadas cord = new Coordenadas(atual.getX()-1, atual.getY());
+                    fila.guarde(cord);
                 }
-            }//resolva
+            }
             if(!fila.isVazia())
                 {
                     atual = fila.getUmItem();
@@ -227,7 +234,8 @@ public class Program
                 }
         }
 
-        public static String toString()
+
+        public static String escreverLabirinto() // static não pode dar override
         {
             StringBuilder ret = new StringBuilder();
 
