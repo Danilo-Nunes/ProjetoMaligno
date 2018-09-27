@@ -21,8 +21,8 @@ public class Coordenadas
         Construtor da classe criado com a função de passar os valores que serão atribuidos respectiva
         mente a x e y para assim criarmos um par ordenado
 
-        @paramx valor que define a coordenada abicssa
-        @paramy valor que define a coordenada ordenada
+        @param x valor que define a coordenada abicssa
+        @param y valor que define a coordenada ordenada
 
      */
 

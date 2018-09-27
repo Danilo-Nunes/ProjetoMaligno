@@ -1,10 +1,25 @@
 package pilha;
 import java.lang.reflect.*; // encontramos as classes que usamos, invoke e method
 
+	/**
+	*	Classe de armazenamento de dados com construtor métodos obrigatórios, métodos para guardar valores, para exibi-los e para descartá-los.
+	*
+	*	@param X tipo de classe que deve ser armazenada
+	*	@author João Victor Javitti e Danilo de Oliveira Nunes
+	*	@since 2018
+	*/
+
 public class Pilha<X> implements Cloneable
 {
 	private Object[] vetor;
 	private int qtd = 0;
+
+	/**
+	*	Construtor da classe que define o valor da quantidade de objetos que serão armazenados
+	*
+	*	@param capacidade A quantidade de valores que poderão ser armazenados no vetor
+	*	@exception exception Chama exceção se o pârametro fornecido for negativo.
+	*/
 
 	public Pilha(int capacidade) throws Exception
 	{
@@ -26,6 +41,16 @@ public class Pilha<X> implements Cloneable
 		}
 	}
 	*/
+	/**
+	*	Método para clonar um objeto da classe X
+	*
+	*	@param x o valor a ser clonado
+	*	@return Retorna o clone do objeto se é possível cloná-lo
+	*	@exception erro chama exceção se o clone não existir
+	 */
+
+
+
 	private X meuCloneDeX(X x)
 	{
 		X ret = null;
@@ -53,6 +78,14 @@ public class Pilha<X> implements Cloneable
 	    return ret;
     }
 
+	/**
+	*	Método para guardar valores no vetor
+	*
+	*	@param s valor a ser guardado
+	*	@see Utiliza o método meuCloneDeX para clonar o valor que deve ser guardado e o método isCheia para checar se a Pilha está cheia
+	*	@exception erro Se o valor é nulo, ou se o vetor já atingiu a capacidade máxima
+	 */
+
 	public void guarde (X s) throws Exception
 	{
 		if(s==null) // não precisa desse:  || s.equals("") pois é só em string
@@ -70,6 +103,15 @@ public class Pilha<X> implements Cloneable
 		this.qtd++;
 	}
 
+	/**
+	*	Método que retorna o último valor introduzido na pilha
+	*
+	*	@return o ultimo valor introduzido na pilha
+	*	@see Usa o método meuCloneDeX para retornar um clone do valor e o método isVazia para checar se a Pilha está vazia
+	*	@exception erro Se a pilha está vazia
+	*/
+
+
 	public X getUmItem() throws Exception
 	{
 		if(isVazia())
@@ -82,6 +124,13 @@ public class Pilha<X> implements Cloneable
 			return (X)this.vetor[this.qtd-1];
 	}
 
+	/**
+	*	Método para descartar o último valor da pilha
+	*
+	*	@exception erro Se a Pilha está vazia
+	*	@see Utiliza o método isVazia para checar se a pilha está vazia
+	 */
+
 	public void jogueForaUmItem() throws Exception
 	{
 		if(isVazia())
@@ -91,15 +140,34 @@ public class Pilha<X> implements Cloneable
 		this.vetor[this.qtd] = null;
 	}
 
+	/**
+	*	Método booleano que retorna se a Pilha atingiu a capacidade máxima ou não
+	*
+	*	@return Retorna se a Capacidade da pilha é igual a quantidade de valores no vetor
+	*/
+
 	public boolean isCheia()
 	{
 		return this.qtd == this.vetor.length;
 	}
 
+	/**
+	*	Método booleano que retorna se a Pilha está vazia ou não
+	*
+	*	@return Retorna se a Capacidade da pilha é igual a zero
+	*/
+
+
 	public boolean isVazia()
 	{
 		return this.qtd == 0;
 	}
+
+	/**
+	*	Método obrigatório que retorna a quantidade e o último valor da pilha em forma de string
+	*
+	*	@return Retorna a quantidade de elementos e o último da pilha numa string
+	 */
 
 	public String toString()
 	{
@@ -108,6 +176,13 @@ public class Pilha<X> implements Cloneable
 
 	    return this.qtd + " elementos, sendo o �ltimo " + this.vetor[this.qtd-1];
     }
+
+	/**
+	*	Método booleano que verifica se o objeto é igual a outro
+	*
+	*	@param obj O objeto para ser comparado
+	*	@return True se são iguais e False se são diferentes
+	 */
 
     public boolean equals(Object obj)
     {
@@ -133,6 +208,12 @@ public class Pilha<X> implements Cloneable
 
     }
 
+	/**
+	*	Método obrigatório que retorna o hashCode do objeto
+	*
+	*	@return o hashCode calculado do objeto que chamou o método
+	 */
+
     public int hashCode()
     {
 		int ret = 666; // pode ser qualquer valor, desde que n�o seja 0
@@ -145,6 +226,12 @@ public class Pilha<X> implements Cloneable
 
 		return ret;
 	}
+
+	/**
+	*	Construtor que constrói uma Pilha exatamente igual a passada por pârametro
+	*
+	*	@param modelo A Pilha que se deve criar uma cópia
+	*/
 
 	// construtor de copia
 	    public Pilha(Pilha modelo) throws Exception
@@ -161,6 +248,12 @@ public class Pilha<X> implements Cloneable
 				// this.vetor[i] = new Horario(modelo.vetor[i]); -- para que todas as coisas sejam de fato clonadas, teria que ser esse, porém gasta mais memória.
 			}
 	    }
+
+		/**
+		*	Método que retorna o clone do objeto que chamou o método
+		*
+		*	@return o Clone do objeto
+		 */
 
 	    public Object clone()
 	    {
