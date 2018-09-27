@@ -4,7 +4,7 @@ import coordenadas.*;
 import java.io.*;
 import java.util.*; // string builder
 
-public class Program // fazer to string para mostrar o labirinto
+public class Program
 {
 	static int linhas;
     static int colunas;
@@ -16,7 +16,7 @@ public class Program // fazer to string para mostrar o labirinto
     static Pilha<Coordenadas> caminho;
     static Pilha<Fila<Coordenadas>> possibilidades;
     //ver se é número
-    public static void main(String[] args) // throws Exception buga, n fununcia nd
+    public static void main(String[] args)
     {
 		try
 		{
@@ -75,7 +75,7 @@ public class Program // fazer to string para mostrar o labirinto
             else
             {
                 throw new Exception("Entrada ou saída não encontradas");
-            }           
+            }
 
             System.out.println("\nLabirinto Resolvido: \n");
 
@@ -227,7 +227,7 @@ public class Program // fazer to string para mostrar o labirinto
                 }
         }
 
-        public static String toString() // verificar esse e o try catch
+        public static String toString()
         {
             StringBuilder ret = new StringBuilder();
 
