@@ -19,16 +19,18 @@ public class Coordenadas
 
     /**
         Construtor da classe criado com a função de passar os valores que serão atribuidos respectiva
-        mente a x e y para assim criarmos um par ordenado
+        mente a x e y para assim criarmos um par ordenado.
 
         @param x valor que define a coordenada abicssa
         @param y valor que define a coordenada ordenada
+
+        @throws Exception lança uma exceção caso algum dos valores fornecidos para formar o par ordenado sejam nulos
 
      */
 
     public Coordenadas(int x, int y) throws Exception
     {
-        if(x < 0 || y < 0 || new Integer(x).equals(null) || new Integer(y).equals(null))
+        if(new Integer(x).equals(null) || new Integer(y).equals(null))
             throw new Exception("Coordenadas inválidas! Digite-as corretamente!");
 
         this.x = x;
@@ -36,7 +38,7 @@ public class Coordenadas
     }
 
     /**
-        Método obrigatorio que tem como função retornar o valor das coordenadas
+        Método obrigatorio que tem como função retornar o valor das coordenadas.
 
         @return retorna par ordenado
      */
@@ -47,7 +49,7 @@ public class Coordenadas
     }
 
     /**
-        Método que tem como função retornar o valor da variável x
+        Método que tem como função retornar o valor da variável x.
 
         @return retorna coordenada abicssa
      */
@@ -58,7 +60,7 @@ public class Coordenadas
     }
 
     /**
-        Método que tem como função retornar o valor da variável y
+        Método que tem como função retornar o valor da variável y.
 
         @return retorna coordenada ordenada
      */
@@ -70,9 +72,10 @@ public class Coordenadas
 
     /**
         Método obrigatório que tem como função comparar um objeto da classe Coordenada com outro da
-        mesma classe e verificar se eles são iguais ou não
+        mesma classe e verificar se eles são iguais ou não.
 
         @return retorna valor booleano true ou false
+
      */
 
     public boolean equals(Object obj)
@@ -97,9 +100,10 @@ public class Coordenadas
     /**
         Método obrigatório que tem como função retornar um número inteiro que será usado para definir
         o hash code da classe para ser usado caso nescessário usar hash em algum programa que 
-        reutilizará esta classe
+        reutilizará esta classe.
 
         @return retorna o hash code da classe
+        
      */
 
     public int hashCode()

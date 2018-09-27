@@ -1,0 +1,34 @@
+Java doc é para comentar as classes
+
+coloca isso:
+
+"C:\Arquivos de programas\Java\jdk1.6.0\bin\javadoc" -d doc *.java
+
+em um bat e roda, depois que estiver pronto
+
+@author	        Nome do desenvolvedor
+@deprecated	Marca o método como deprecated. Algumas IDEs exibirão um alerta de compilação se o método for chamado.
+@exception	Documenta uma exceção lançada por um método — veja também @throws.
+@param	        Define um parâmetro do método. Requerido para cada parâmetro.
+@return	        Documenta o valor de retorno. Essa tag não deve ser usada para construtores ou métodos definidos com o tipo de retorno void.
+@see	        Documenta uma associação a outro método ou classe.
+@since          Documenta quando o método foi adicionado a a classe.
+@throws	        Documenta uma exceção lançada por um método. É um sinônimo para a @exception introduzida no Javadoc 1.2.
+@version	Exibe o número da versão de uma classe ou um método.
+
+ex:
+/**
+  * Valida um movimento de xadrez.
+  * 
+  * @param aColunaDe   Coluna atual da peça a ser movida
+  * @param aLinhaDe    Linha atual da peça a ser movida
+  * @param aColunaPara Coluna destino da peça a ser movida
+  * @param aLinhaPara  Linha destino da peça a ser movida
+  * @return            verdadeiro se o movimento é válido ou falso se inválido
+  * @author            Joana Silva
+  * @author            Nuno Martins
+  */
+  boolean validaMovimento(int aColunaDe, int aLinhaDe, int aColunaPara, int aLinhaPara)
+  {
+      ...  
+  }

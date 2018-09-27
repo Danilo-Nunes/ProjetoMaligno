@@ -1,25 +1,31 @@
 package pilha;
 import java.lang.reflect.*; // encontramos as classes que usamos, invoke e method
 
-	/**
-	*	Classe de armazenamento de dados com construtor métodos obrigatórios, métodos para guardar valores, para exibi-los e para descartá-los.
-	*
-	*	@param X tipo de classe que deve ser armazenada
-	*	@author João Victor Javitti e Danilo de Oliveira Nunes
-	*	@since 2018
-	*/
+/**
+	Classe genérica criada com o objetivo de empilhar objetos de forma que se comportem como uma pilha, sendo adicionados no final do vetor, e sendo retirados do 
+	começo. Possui 2 construtores, o de cópia e o normal; variáveis que armazenam a pilha e a quantidade de dados na pilha; possui o getter do final da pilha e um
+	método que o exclui, fazendo a pilha reduzir; possui também os métodos obrigatórios que têm como função auxiliar e facilitar na utilização 	da classe em diversos
+	outros programas.
+
+	 @since 2018
+
+     @author Danilo de Oliveira Nunes 18203 e João Vitor Javitti Alves 18207
+	
+ */
 
 public class Pilha<X> implements Cloneable
 {
-	private Object[] vetor;
-	private int qtd = 0;
+	protected Object[] vetor;
+	protected int qtd = 0;
 
 	/**
-	*	Construtor da classe que define o valor da quantidade de objetos que serão armazenados
-	*
-	*	@param capacidade A quantidade de valores que poderão ser armazenados no vetor
-	*	@exception exception Chama exceção se o pârametro fornecido for negativo.
-	*/
+		Construtor principal da classe criado com a função de passar o valor que será atrinuido a variável capacidade.
+
+		@param capacidade define o tamanho limite da fila
+
+		@throws Exception lança uma excessão caso a capacidade da pilha seja negativa
+
+	 */
 
 	public Pilha(int capacidade) throws Exception
 	{
@@ -28,50 +34,29 @@ public class Pilha<X> implements Cloneable
 
 		this.vetor = new Object[capacidade];
 	}
-	/* vers�o remediadora
-	public Pilha(int capacidade) throws Exception
-	{
-		try
-		{
-			this.vetor = new String[capacidade];
-		}
-		catch(NegativeArraySizeException erro)
-		{
-			throw new Exception("Capacidade inv�lida");
-		}
-	}
-	*/
+
 	/**
-	*	Método para clonar um objeto da classe X
-	*
-	*	@param x o valor a ser clonado
-	*	@return Retorna o clone do objeto se é possível cloná-lo
-	*	@exception erro chama exceção se o clone não existir
+		Método que força a chamada do método clone da classe paramenizada pois não é possível chamar o clone de uma classe que o java não sabe que tem clone,
+		mas como sabe-se que possui, forçaremos a sua chamada com este método.
+
+		@exception erro exceção genérica que não é tratada, pois não há a nescessidade
+
+		@return retorna clone de x
+		
 	 */
 
-
-
-	private X meuCloneDeX(X x)
+	protected X meuCloneDeX(X x)
 	{
 		X ret = null;
 		try
 		{
-		// agora o que quero fazer de um jeito DEMONIACO é return x.clone();
-		Class<?> classe = x.getClass();
-		Class<?>[] tiposDosParametrosFormais = null; // null pq clone tem 0 parâmetros, ou (Class<?>[])null
-		Method metodo = classe.getMethod("Clone", tiposDosParametrosFormais);
-		Object[] parametrosReais = null; // null pq clone tem 0 parâmetros
-		ret = (X)metodo.invoke(x, parametrosReais); // dois parâmeros, o chamante e o vetor(str, parametrosReais)
+			Class<?> classe = x.getClass();
+			Class<?>[] tiposDosParametrosFormais = null; 
+			Method metodo = classe.getMethod("Clone", tiposDosParametrosFormais);
+			Object[] parametrosReais = null; 
+			ret = (X)metodo.invoke(x, parametrosReais); 
 	    }
-	    catch(NoSuchMethodException erro) // sei que não vai acontecer essa excessão então não vou tratar, mas tem que saber hein. aconteceria se escrevesse outra coisa no lugar de clone, clone não existisse
-	    {
-
-	    }
-	    catch(IllegalAccessException erro) // aconteceria se clone não existisse
-	    {
-
-	    }
-	    catch(Exception erro) // aconteceria se clone não existisse
+	    catch(Exception erro) // pega todas as exce
 		{
 
 	    }
@@ -79,72 +64,70 @@ public class Pilha<X> implements Cloneable
     }
 
 	/**
-	*	Método para guardar valores no vetor
-	*
-	*	@param s valor a ser guardado
-	*	@see Utiliza o método meuCloneDeX para clonar o valor que deve ser guardado e o método isCheia para checar se a Pilha está cheia
-	*	@exception erro Se o valor é nulo, ou se o vetor já atingiu a capacidade máxima
+		Método criado para guardar um objeto da classe paramenizada.
+
+		@throws Exception lança exceções se a instancia do objeto for nula ou se a fila não tiver capacidade para guardar mais uma informação
+
 	 */
 
 	public void guarde (X s) throws Exception
 	{
-		if(s==null) // não precisa desse:  || s.equals("") pois é só em string
+		if(s==null) 
 		   throw new Exception("Informa��o ausente!");
 
 		if(isCheia())
 			throw new Exception("N�mero m�ximo de capacidade atingido!");
 
-		if(s instanceof Cloneable) // é um comando, não método
-			this.vetor[this.qtd] = meuCloneDeX(s); // vai dar pau, tem que contornar
+		if(s instanceof Cloneable) 
+			this.vetor[this.qtd] = meuCloneDeX(s); 
 		else
 			this.vetor[this.qtd] = s;
-		// this.vetor[this.qtd] = (Registro)s.clone();
-		// this.vetor[this.qtd] = new Object(s);
+
 		this.qtd++;
 	}
 
 	/**
-	*	Método que retorna o último valor introduzido na pilha
-	*
-	*	@return o ultimo valor introduzido na pilha
-	*	@see Usa o método meuCloneDeX para retornar um clone do valor e o método isVazia para checar se a Pilha está vazia
-	*	@exception erro Se a pilha está vazia
-	*/
+		Método criado para retornar o último dado da pilha.
 
+		@throws Exception lança uma exceção se a pilha estiver sem nenhum dado
+
+		@return retorna o último valor da classe clonada, para evitar mal uso das informações e erros futuros
+
+	 */
 
 	public X getUmItem() throws Exception
 	{
 		if(isVazia())
 			throw new Exception("Nada a recuperar");
 
-		// return this.vetor[this.qtd-1];
 		if(this.vetor[this.qtd-1] instanceof Cloneable)
 			return meuCloneDeX((X)this.vetor[this.qtd-1]);
-		// else
+
 			return (X)this.vetor[this.qtd-1];
 	}
 
 	/**
-	*	Método para descartar o último valor da pilha
-	*
-	*	@exception erro Se a Pilha está vazia
-	*	@see Utiliza o método isVazia para checar se a pilha está vazia
+		Método criado para remover o último dado da fila.
+
+		@throws Exception lança uma exceção caso a fila esteja sem nenhum dado
+
 	 */
 
 	public void jogueForaUmItem() throws Exception
 	{
 		if(isVazia())
-		   throw new Exception ("N�o h� nada a se apagar!"); // = Exception problema; problema = new Exception("N�o h� nada a recuperar"); throw problema;
+		   throw new Exception ("N�o h� nada a se apagar!"); 
 
 		this.qtd--;
 		this.vetor[this.qtd] = null;
 	}
 
 	/**
-	*	Método booleano que retorna se a Pilha atingiu a capacidade máxima ou não
-	*
-	*	@return Retorna se a Capacidade da pilha é igual a quantidade de valores no vetor
-	*/
+		Método criado para verificar se a pilha atingiu a sua capacidade máxima.
+
+		@return retorna valor booleano true ou false
+
+	 */
 
 	public boolean isCheia()
 	{
@@ -152,11 +135,11 @@ public class Pilha<X> implements Cloneable
 	}
 
 	/**
-	*	Método booleano que retorna se a Pilha está vazia ou não
-	*
-	*	@return Retorna se a Capacidade da pilha é igual a zero
-	*/
+		Método criado para verificar se a pilha não possui dados.
 
+		@return retorna valor booleano true ou false
+
+	 */
 
 	public boolean isVazia()
 	{
@@ -164,9 +147,10 @@ public class Pilha<X> implements Cloneable
 	}
 
 	/**
-	*	Método obrigatório que retorna a quantidade e o último valor da pilha em forma de string
-	*
-	*	@return Retorna a quantidade de elementos e o último da pilha numa string
+		Método criado para indicar a quantidade de elementos e o valor do último elemento.
+
+		@return retorna essas informações em uma String
+
 	 */
 
 	public String toString()
@@ -178,10 +162,11 @@ public class Pilha<X> implements Cloneable
     }
 
 	/**
-	*	Método booleano que verifica se o objeto é igual a outro
-	*
-	*	@param obj O objeto para ser comparado
-	*	@return True se são iguais e False se são diferentes
+		Método obrigatório que tem como função comparar um objeto da classe Pilha com outro da
+        mesma classe e verificar se eles são iguais ou não.
+
+        @return retorna valor booleano true ou false
+
 	 */
 
     public boolean equals(Object obj)
@@ -197,7 +182,7 @@ public class Pilha<X> implements Cloneable
 
 		Pilha<X> pil = (Pilha<X>)obj;
 
-		if(this.qtd != pil.qtd) // ou ((Pilha)obj) -- mais econ�mico, economiza 4 bytes
+		if(this.qtd != pil.qtd) 
 			return false;
 
 		for(int i=0; i < this.qtd; i++)
@@ -209,65 +194,70 @@ public class Pilha<X> implements Cloneable
     }
 
 	/**
-	*	Método obrigatório que retorna o hashCode do objeto
-	*
-	*	@return o hashCode calculado do objeto que chamou o método
-	 */
+        Método obrigatório que tem como função retornar um número inteiro que será usado para definir
+        o hash code da classe para ser usado caso nescessário usar hash em algum programa que 
+        reutilizará esta classe.
+
+        @return retorna o hash code da classe
+        
+     */
 
     public int hashCode()
     {
-		int ret = 666; // pode ser qualquer valor, desde que n�o seja 0
+		int ret = 666; 
 
-		ret = ret*2 + new Integer(this.qtd).hashCode(); // qualquer n�mero primo, pode variar nas outras linhas + hashCode de cada coisa que tenho guardada dentro do meu objeto
+		ret = ret*2 + new Integer(this.qtd).hashCode(); 
 
 		for(int i = 0; i < this.qtd; i++)
-		 // if(this.vetor[i] != null, a rigor dever�amos fazer isso, mas n�s codificamos m�todos que n�o permitem isso
-		      ret = ret*2 + this.vetor[i].hashCode(); // envolver todos os dados, at� os mais miudinhos, evita repeti��es
+		      ret = ret*2 + this.vetor[i].hashCode(); 
 
 		return ret;
 	}
 
 	/**
-	*	Construtor que constrói uma Pilha exatamente igual a passada por pârametro
-	*
-	*	@param modelo A Pilha que se deve criar uma cópia
-	*/
+        Construtor de cópia obrigatório criado para ser usado pelo método clone em clonar a classe, para evitar mal uso das informações e erros futuros.
+        
+		@param modelo define o objeto da Pilha a ser clonado
 
-	// construtor de copia
-	    public Pilha(Pilha modelo) throws Exception
-	    {
-			if(modelo==null)
-			   throw new Exception("Modelo ausente");
+		@throws Exception lança uma exceção caso o parâmetro passado seja nulo
 
-			this.qtd = modelo.qtd;
-			this.vetor = new Object[modelo.vetor.length]; // se não for assim teremos apenas um espaço ara jogar ponteiros, bagunçando tudo
+     */
 
-			for(int i = 0; i <= modelo.qtd; i++)
-			{
-				this.vetor[i] = modelo.vetor[i];
-				// this.vetor[i] = new Horario(modelo.vetor[i]); -- para que todas as coisas sejam de fato clonadas, teria que ser esse, porém gasta mais memória.
-			}
-	    }
+	public Pilha(Pilha modelo) throws Exception
+	{
+		if(modelo==null)
+			throw new Exception("Modelo ausente");
 
-		/**
-		*	Método que retorna o clone do objeto que chamou o método
-		*
-		*	@return o Clone do objeto
-		 */
+		this.qtd = modelo.qtd;
+		this.vetor = new Object[modelo.vetor.length]; 
 
-	    public Object clone()
-	    {
-			Pilha<X> ret = null;
+		for(int i = 0; i <= modelo.qtd; i++)
+		{
+			this.vetor[i] = modelo.vetor[i];				
+		}
+	}
 
-			try
-			{
+	/**
+		Método obrigatório criado para utilizar o contrutor de cópia para clonar a classe.
+
+		@return retorna a classe clonada
+
+		@throws Exception lança uma excessão caso o objeto paramenizado da classe seja nulo
+	 */
+
+	public Object clone()
+	{
+		Pilha<X> ret = null;
+
+		try
+		{
 	        ret = new Pilha<X>(this);
-		    }
-		    catch(Exception erro)
-		    {
+		}
+		catch(Exception erro)
+		{
 
-		    }
+		}
 
-		    return ret;
+		return ret;
     }
 }
