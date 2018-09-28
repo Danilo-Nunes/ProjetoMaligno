@@ -32,9 +32,20 @@ public class Labirinto implements Cloneable
 
     public Labirinto(char lab[][], int lin, int column)
     {
+       if(lab == null || lin == null || column == null)
+        throw new exception("Valores Nulos");
+
+        if(lin < 0 || column < 0)
+            throw new exception("Valores inválidos");
+
+
         this.labirinto = lab;
         this.linhas = lin;
         this.colunas = column;
+
+
+        caminho = new Pilha(lin*column);
+        possibilidades = new Pilha(lin*column);
     }
     /**
     * Metodo que checa se o Labirinto tem uma entrada e uma saída
@@ -75,7 +86,10 @@ public class Labirinto implements Cloneable
             if(taaki4[1] == true)
                 saidas++;
 
-    		return (entradas == 1 && saidas ==1);
+    		if(entradas == 1)
+    			atual = new Coordenada(xEntrada, yEntrada);
+    		return (entradas == 1 && saidas == 1);
+
         }
         /**
         * Método que procura dois caracteres em uma linha da matriz e manda as coordenadas da entrada
