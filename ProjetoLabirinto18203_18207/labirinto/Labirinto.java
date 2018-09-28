@@ -59,31 +59,31 @@ public class Labirinto implements Cloneable
  			int saidas = 0;
 	 		int entradas = 0;
 	     	//  primeira linha
-            boolean[] taaki = this.estaNaLinha(0, 'E', 'S');
-            if(taaki[0] == true)
+            boolean[] estaNa1Linha = this.estaNaLinha(0, 'E', 'S');
+            if(estaNa1Linha[0] == true)
                 entradas++;
-            if(taaki[1] == true)
+            if(estaNa1Linha[1] == true)
                 saidas++;
 
 	     	//  primeira coluna
-            boolean[] taaki2 = this.estaNaColuna(0, 'E', 'S');
-            if(taaki2[0] == true)
+            boolean[] estaNa1Coluna = this.estaNaColuna(0, 'E', 'S');
+            if(estaNa1Coluna[0] == true)
                 entradas++;
-            if(taaki2[1] == true)
+            if(estaNa1Coluna[1] == true)
                 saidas++;
 
 	     	// ultima linha
-            boolean taaki3 = this.estaNaLinha(linhas, 'E', 'S');
-			if(taaki3[0] == true)
+            boolean estaNaUltLinha = this.estaNaLinha(linhas, 'E', 'S');
+			if(estaNaUltLinha[0] == true)
                 entradas++;
-            if(taaki3[1] == true)
+            if(estaNaUltLinha[1] == true)
                 saidas++;
 
 	     	// ultima coluna
-	 		  boolean[] taaki4 = this.estaNaColuna(colunas, 'E', 'S');
-            if(taaki4[0] == true)
+	 		  boolean[] estaNaUltColuna = this.estaNaColuna(colunas, 'E', 'S');
+            if(estaNaUltColuna[0] == true)
                 entradas++;
-            if(taaki4[1] == true)
+            if(estaNaUltColuna[1] == true)
                 saidas++;
 
     		if(entradas == 1)
@@ -164,7 +164,7 @@ public class Labirinto implements Cloneable
 		   testaOutra(Fila<Coordenadas> fila);
 		}
 
-		private void direcaoY(Coordenadas[4] espacos, int atualX, int atualY)
+		private void direcaoY(Coordenadas[] espacos, int atualX, int atualY)
 		{
 			if(atualY + 1 < linhas)
 		    {
@@ -185,7 +185,7 @@ public class Labirinto implements Cloneable
 		    }
 		}
 
-		private void direcaoX(Coordenadas[4] espacos, int atualX, int atualY)
+		private void direcaoX(Coordenadas[] espacos, int atualX, int atualY)
 		{
 			if(atual.getX() + 1 < colunas)
 		    {

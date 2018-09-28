@@ -31,25 +31,18 @@ public class Program
             }
             file.close();
 
-            Labirinto-+ lab = new Labirinto(labirinto, linhas, colunas);
+            Labirinto lab = new Labirinto(labirinto, linhas, colunas);
 
             terminou = false;
             if(lab.checarLabirinto())
             {
-                while(!terminou)
+                while(lab.isCompletado())
                 {
-                    //Movimentar(atual);
+                    lab.movimentar();
                 }
-                Pilha<Coordenadas> inverso = new Pilha<Coordenadas>(linhas*colunas);
+                System.out.println("O Labirinto é resolvido da seguinte forma: \n");
+                System.out.println(lab.toString()); 
 
-                System.out.println("O Labirinto é resolvido nas seguintes coordenadas: \n");
-
-                while(!caminho.isVazia())
-                {
-                    inverso.guarde(caminho.getUmItem());
-                    caminho.jogueForaUmItem();
-                    System.out.println(inverso.getUmItem());
-                }
             }
             else
             {
@@ -66,91 +59,4 @@ public class Program
         }
 
     }
-
-        public static void Movimentar(Coordenadas atual) throws Exception
-        {//empilhar
-            Fila<Coordenadas> fila = new Fila<Coordenadas>(3);
-
-            //Se da pra mover na direção Y:
-
-            if(atual.getY() + 1 < linhas)
-            {
-                if(labirinto[atual.getX()][atual.getY()+1] == ' ')
-                {
-                    Coordenadas cord = new Coordenadas(atual.getX(), atual.getY() + 1);
-                    fila.guarde(cord);
-                }
-            }
-
-            if(atual.getY() - 1 < -1)
-            {
-                if(labirinto[atual.getX()][atual.getY()-1] == ' ')
-                {
-                Coordenadas cord = new Coordenadas(atual.getX(), atual.getY() - 1);
-                fila.guarde(cord);
-                }
-            }
-            //Se pode se mover na direção X
-            if(atual.getX() + 1 < colunas)
-            {
-                if(labirinto[atual.getX()+1][atual.getY()] == ' ')
-                {
-                    Coordenadas cord = new Coordenadas(atual.getX()+1, atual.getY());
-                    fila.guarde(cord);
-                }
-            }
-
-            if(atual.getX() - 1 > -1)
-            {
-                if(labirinto[atual.getX()+1][atual.getY()] == ' ')
-                {
-                    Coordenadas cord = new Coordenadas(atual.getX()-1, atual.getY());
-                    fila.guarde(cord);
-                }
-            }
-            if(!fila.isVazia())
-                {
-                    atual = fila.getUmItem();
-                    fila.jogueForaUmItem();
-
-                    if(labirinto[atual.getX()][atual.getY()] != 'S')
-                        labirinto[atual.getX()][atual.getY()] = '*';
-                    else
-                        terminou = true;
-
-                    caminho.guarde(atual);
-
-                    possibilidades.guarde(fila);
-                }
-            else
-                {
-                    if(!possibilidades.isVazia())
-                    {
-                    atual = caminho.getUmItem();
-                    caminho.jogueForaUmItem();
-                    labirinto[atual.getX()][atual.getY()] = ' ';
-                    fila = possibilidades.getUmItem();
-                    possibilidades.jogueForaUmItem();
-                    }
-                    else
-                        throw new Exception("Labirinto sem resolução!");
-
-                }
-        }
-
-
-       /* public static String escreverLabirinto() // static não pode dar override
-        {
-            StringBuilder ret = new StringBuilder();
-
-            for ( int i = 0; i <= labirinto.length-1; i++) {
-                for ( int j = 0; j <= labirinto[i].length-1; j++) {
-                    ret.append(labirinto[i][j]);
-                }
-                ret.append('\n');
-            }
-
-            ret.append(caminho.toString());//a Plha<Coordenada> inverso estava mostrando o caminho invertido (da saida para a entrada),
-            return ret.toString();              //entao, para exibir na ordem certa, nao precisou cria-la.
-        }*/
-    }
+}
