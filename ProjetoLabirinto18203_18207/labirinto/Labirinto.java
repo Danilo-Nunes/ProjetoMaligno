@@ -331,6 +331,15 @@ public class Labirinto implements Cloneable
 
 		}
 
+
+		/**
+			Método obrigatório que cria um clone do Labirinto
+
+
+			@return Retorna o clone do labirinto que chamou o método
+
+		*/
+
 		public Object clone()
 		{
 			Labirinto ret = null;
