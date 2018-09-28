@@ -330,4 +330,20 @@ public class Labirinto implements Cloneable
 			return ret;
 
 		}
+
+		public Object clone()
+		{
+			Labirinto ret = null;
+
+			try
+			{
+				ret = new Labirinto(this);
+			}
+			catch (Exception erro)
+			{
+
+			}
+
+			return ret;
+		}
 }
