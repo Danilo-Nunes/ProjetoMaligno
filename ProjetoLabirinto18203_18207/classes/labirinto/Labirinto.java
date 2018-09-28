@@ -1,8 +1,8 @@
-﻿package labirinto;
+﻿package classes;
 import java.lang.reflect.*;
-import labirinto.coordenadas.*;
-import labirinto.pilha.*;
-import labirinto.fila.*;
+import coordenadas.*;
+import pilha.*;
+import fila.*;
 
 /**
 *   Classe para ler o labirinto e verificar se segue o padrão correto, depois se tudo estiver correto, resolvê-lo em coordenadas e mostrar a solução.
@@ -140,7 +140,7 @@ public class Labirinto implements Cloneable
             boolean[] bol = {false, false};
             for (int i = 0; i <= this.labirinto.length-1; i++)
 	 		{
-	     		if(this.labirinto[i][col] == e)
+	     		if (this.labirinto[i][col] == e)
                 {
                     xEntrada = col;
                     yEntrada = i;
@@ -306,28 +306,4 @@ public class Labirinto implements Cloneable
             ret.append(caminho.toString());//a Plha<Coordenada> inverso estava mostrando o caminho invertido (da saida para a entrada),
             return ret.toString();              //entao, para exibir na ordem certa, nao precisou cria-la.
         }
-
-
-        public int hashCode()
-        {
-			int ret = 666;
-
-			ret = ret * 2 + new Integer(this.linhas).hashCode();
-
-			for(int i = 0; i < linhas; i++)
-				for(int j = 0; j < colunas; j++)
-					ret = ret*2 + this.labirinto[i][j].hashCode();
-
-			ret = ret * 2 + new Integer(this.xEntrada).hashCode();
-			ret = ret * 2 + new Integer(this.yEntrada).hashCode();
-
-			ret = ret * 2 + this.atual.hashCode();
-			ret = ret * 2 + this.caminho.hashCode();
-			ret = ret * 2 + this.possibilidades.hashCode();
-
-			ret = ret * 2 + new Boolean(this.terminou).hashCode();
-
-			return ret;
-
-		}
 }
