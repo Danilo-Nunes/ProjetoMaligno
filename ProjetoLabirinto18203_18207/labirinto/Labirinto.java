@@ -5,9 +5,10 @@ import pilha.*;
 import fila.*;
 
 /**
-*   Classe para ler o labirinto e verificar se segue o padrão correto
+*   Classe para ler o labirinto e verificar se segue o padrão correto, depois se tudo estiver correto, resolvê-lo em coordenadas e mostrar a solução.
 *
 *   @since 2018
+*
 *   @author João Victor Javitti - Danilo de Oliveira Nunes
 */
 
@@ -17,10 +18,11 @@ public class Labirinto implements Cloneable
     protected int colunas;
     protected char labirinto[][];
     protected int xEntrada;
-    protected int yEntrada;
+    protected int yEntrada;    
+    protected Coordenadas atual;
     protected Pilha<Coordenadas> caminho;
     protected Pilha<Fila<Coordenadas>> possibilidades;
-    
+    protected boolean terminou;
 
     /**
     *   Construtor principal da classe Labirinto
@@ -44,16 +46,19 @@ public class Labirinto implements Cloneable
         this.linhas = lin;
         this.colunas = column;
 
+        this.terminou = false;
 
-        caminho = new Pilha(lin*column);
-        possibilidades = new Pilha(lin*column);
+        this.caminho = new Pilha(lin*column);
+        this.possibilidades = new Pilha(lin*column);
     }
+
     /**
     * 	Método que verifica se o Labirinto fornecido possui uma entrada e uma saída para ser finalizado e delimita a posição inicial isto é,
     *   a posição de entrada do labirinto.
     *
     *   @return true se o Laabirinto atenda as verificações e false se não atende
     *   @see Usa os métodos estaNaLinha e estaNaColuna para procurar a entrada e a saída
+    *
     */
 
     public boolean checarLabirinto()
@@ -91,8 +96,8 @@ public class Labirinto implements Cloneable
     		if(entradas == 1)
     			atual = new Coordenada(xEntrada, yEntrada);
     		return (entradas == 1 && saidas == 1);
-
         }
+
         /**
         * Método que percorre uma linha especifica da matriz e verifica se ela possui os caracteres fornecidos 
         *
@@ -100,20 +105,21 @@ public class Labirinto implements Cloneable
         *   @param e o primeiro caracter para procurar
         *   @param s o segundo caracter para procurar
         *   @return Retorna um vetor de boolean com os valores true se encontrou e false se não encontrou
+        *
         */
 
        protected boolean[] estaNaLinha (int lin, char e, char s)
         {
            boolean[] bol = {false, false};
-            for (int i = 1; i <= labirinto[lin].length-2; i++)
+            for (int i = 1; i <= this.labirinto[lin].length-2; i++)
             {
-	             if (labirinto[lin][i] == e)
+	             if (this.labirinto[lin][i] == e)
                  {
                      xEntrada = i;
                      yEntrada = lin;
                      bol[0] = true;
                  }
-                 if(labirinto[lin][i] == s)
+                 if(this.labirinto[lin][i] == s)
                     bol[1] = true;
 	     	}
 
@@ -126,30 +132,35 @@ public class Labirinto implements Cloneable
         *   @param col A coluna onde se deve procurar
         *   @param e o primeiro caracter para procurar
         *   @param s o segundo caracter para procurar
+        *
         */
 
         protected boolean[] estaNaColuna (int col, char e, char s)
         {
             boolean[] bol = {false, false};
-            for (int i = 0; i <= labirinto.length-1; i++)
+            for (int i = 0; i <= this.labirinto.length-1; i++)
 	 		{
-	     		if (labirinto[i][col] == e)
+	     		if this.labirinto[i][col] == e)
                 {
                     xEntrada = col;
                     yEntrada = i;
                     bol[0] = true;
                 }
-                if(labirinto[i][col] == s)
+                if(this.labirinto[i][col] == s)
                     bol[1] = true;
 	     	}
               return bol;
         }
 
         /**
-		   Método criado para
+		   Método que tem como função chamar outros métodos auxiliares para achar a saida do labirinto.
+
+           @see usa os métodos direcaoY, direcaoX e testaOutra para verificar os espaços possiveis de movimento e armazenar as possibilidades alternativas de movimento
+           em possibilidades até achar a saída, caso não reste nenhuma(todas não tenham a saida), o labirinto não terá solução.
+
 		*/
 
-		public static void Movimentar() throws Exception
+		public void movimentar() throws Exception
 		{
 		   Fila<Coordenadas> fila = new Fila<Coordenadas>(3);
 		   Coordenadas[] espacos = new Coordenada[4];
@@ -167,11 +178,16 @@ public class Labirinto implements Cloneable
 		   testaOutra(Fila<Coordenadas> fila);
 		}
 
+        /**
+            Método criado para verificar possibilidades de movimento no eixo Y, espaços em branco nas linhas da matriz.
+
+         */
+
 		private void direcaoY(Coordenadas[] espacos, int atualX, int atualY)
 		{
 			if(atualY + 1 < linhas)
 		    {
-		       if(labirinto[atualX][atualY + 1] == ' ')
+		       if(this.labirinto[atualX][atualY + 1] == ' ')
 		       {
 		          Coordenadas cord = new Coordenadas(atualX, atualY + 1);
 				  espacos[0] = cord;
@@ -180,7 +196,7 @@ public class Labirinto implements Cloneable
 
 		    if(atualY - 1 < -1)
 		    {
-		       if(labirinto[atualX][atualY - 1] == ' ')
+		       if(this.labirinto[atualX][atualY - 1] == ' ')
 		       {
 		          Coordenadas cord = new Coordenadas(atualX, atualY - 1);
 			      espacos[1] = cord;
@@ -188,11 +204,16 @@ public class Labirinto implements Cloneable
 		    }
 		}
 
+        /**
+            Método criado para verificar possibilidades de movimento no eixo X, espaços em branco nas Colunas da matriz.
+
+         */
+
 		private void direcaoX(Coordenadas[] espacos, int atualX, int atualY)
 		{
 			if(atual.getX() + 1 < colunas)
 		    {
-		       if(labirinto[atual.getX()+1][atual.getY()] == ' ')
+		       if(this.labirinto[atual.getX()+1][atual.getY()] == ' ')
 		       {
 		           Coordenadas cord = new Coordenadas(atual.getX() + 1, atual.getY());
 				   espacos[2] = cord;
@@ -209,7 +230,15 @@ public class Labirinto implements Cloneable
 		    }
 		}
 
-		private void testaOutra(Coordenadas atual, Fila<Coordenadas> fila) // se nao tem nenhuma coord possivel, pega outra na possibilidades
+        /**
+            Método criado para testar outra possibilidade de movimento no eixo Y, em outra coordenada possível, para caso não tenha nenhum espaço em branco nas linhas
+            e colunas da matriz na última coordenada testada.
+
+            @param fila fila que usaremos para pegar as possiveis coordenadas em que é possível nos mover.
+
+         */
+
+		private void testaOutra(Fila<Coordenadas> fila) // se nao tem nenhuma coord possivel, pega outra na possibilidades
 		{
 			if(!fila.isVazia())
 		    {
@@ -243,6 +272,25 @@ public class Labirinto implements Cloneable
 
 		      }
 		}
+
+        /**
+            Método criado para verificar se o labirinto foi completado.
+
+            @return retorna o valor de terminou.
+            
+         */
+
+        public boolean isCompletado()
+        {
+            return this.terminou;
+        }
+
+        /**
+            Método criado para escrever a matriz com os dados referentes ao labirinto resolvido(indicando caminho).
+
+            @return retorna o labirinto resolvido
+
+         */
 
         public String toString()
         {
