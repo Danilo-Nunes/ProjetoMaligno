@@ -49,10 +49,11 @@ public class Labirinto implements Cloneable
         possibilidades = new Pilha(lin*column);
     }
     /**
-    * 	Metodo que checa se o Labirinto tem uma entrada e uma saída
+    * 	Método que verifica se o Labirinto fornecido possui uma entrada e uma saída para ser finalizado e delimita a posição inicial isto é,
+    *   a posição de entrada do labirinto.
     *
     *   @return true se o Laabirinto atenda as verificações e false se não atende
-    *   @see Usa os métods estaNaLinha e estaNaColuna para procurar a entrada e a saída
+    *   @see Usa os métodos estaNaLinha e estaNaColuna para procurar a entrada e a saída
     */
 
     public boolean checarLabirinto()
@@ -93,11 +94,12 @@ public class Labirinto implements Cloneable
 
         }
         /**
-        * Método que procura dois caracteres em uma linha da matriz e manda as coordenadas da entrada
+        * Método que percorre uma linha especifica da matriz e verifica se ela possui os caracteres fornecidos 
         *
         *   @param lin A linha onde se deve procurar
         *   @param e o primeiro caracter para procurar
         *   @param s o segundo caracter para procurar
+        *   @return Retorna um vetor de boolean com os valores true se encontrou e false se não encontrou
         */
 
        protected boolean[] estaNaLinha (int lin, char e, char s)
