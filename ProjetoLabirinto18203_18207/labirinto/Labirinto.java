@@ -20,6 +20,7 @@ public class Labirinto implements Cloneable
     protected int yEntrada;
     protected Pilha<Coordenadas> caminho;
     protected Pilha<Fila<Coordenadas>> possibilidades;
+    
 
     /**
     *   Construtor principal da classe Labirinto
