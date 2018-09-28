@@ -1,4 +1,4 @@
-package pilha;
+package labirinto.pilha;
 import java.lang.reflect.*; // encontramos as classes que usamos, invoke e method
 
 /**

@@ -1,6 +1,6 @@
-import pilha.*;
-import fila.*;
-import coordenadas.*;
+import labirinto.coordenadas.*;
+import labirinto.pilha.*;
+import labirinto.fila.*;
 import labirinto.*;
 import java.io.*;
 import java.util.*; // string builder
@@ -33,7 +33,6 @@ public class Program
 
             Labirinto lab = new Labirinto(labirinto, linhas, colunas);
 
-            terminou = false;
             if(lab.checarLabirinto())
             {
                 while(lab.isCompletado())
@@ -41,7 +40,7 @@ public class Program
                     lab.movimentar();
                 }
                 System.out.println("O Labirinto é resolvido da seguinte forma: \n");
-                System.out.println(lab.toString()); 
+                System.out.println(lab.toString());
 
             }
             else
@@ -49,7 +48,7 @@ public class Program
                 throw new Exception("Entrada ou saída não encontradas");
             }
 
-            PrintStream resultado = new PrintWriter(new FileWriter(diretorio + ".res.txt"));
+            PrintStream resultado = new PrintStream(diretorio + ".res.txt");
             resultado.println(lab.toString());
             resultado.close();
 	    }

@@ -1,8 +1,8 @@
 ﻿package labirinto;
 import java.lang.reflect.*;
-import coordenadas.*;
-import pilha.*;
-import fila.*;
+import labirinto.coordenadas.*;
+import labirinto.pilha.*;
+import labirinto.fila.*;
 
 /**
 *   Classe para ler o labirinto e verificar se segue o padrão correto, depois se tudo estiver correto, resolvê-lo em coordenadas e mostrar a solução.
@@ -18,7 +18,7 @@ public class Labirinto implements Cloneable
     protected int colunas;
     protected char labirinto[][];
     protected int xEntrada;
-    protected int yEntrada;    
+    protected int yEntrada;
     protected Coordenadas atual;
     protected Pilha<Coordenadas> caminho;
     protected Pilha<Fila<Coordenadas>> possibilidades;
@@ -99,7 +99,7 @@ public class Labirinto implements Cloneable
         }
 
         /**
-        * Método que percorre uma linha especifica da matriz e verifica se ela possui os caracteres fornecidos 
+        * Método que percorre uma linha especifica da matriz e verifica se ela possui os caracteres fornecidos
         *
         *   @param lin A linha onde se deve procurar
         *   @param e o primeiro caracter para procurar
@@ -140,7 +140,7 @@ public class Labirinto implements Cloneable
             boolean[] bol = {false, false};
             for (int i = 0; i <= this.labirinto.length-1; i++)
 	 		{
-	     		if this.labirinto[i][col] == e)
+	     		if(this.labirinto[i][col] == e)
                 {
                     xEntrada = col;
                     yEntrada = i;
@@ -277,7 +277,7 @@ public class Labirinto implements Cloneable
             Método criado para verificar se o labirinto foi completado.
 
             @return retorna o valor de terminou.
-            
+
          */
 
         public boolean isCompletado()

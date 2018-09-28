@@ -1,4 +1,4 @@
-package coordenadas;
+package labirinto.coordenadas;
 
  /**
          Classe criada com função de guardar as coordenadas de um plano cartesiano. Possui construtor,

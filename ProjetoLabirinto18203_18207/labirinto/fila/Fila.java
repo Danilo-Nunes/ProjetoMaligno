@@ -1,4 +1,4 @@
-package fila;
+package labirinto.fila;
 import java.lang.reflect.*; // encontramos as classes que usamos, invoke e method
 
 /**
